@@ -1,0 +1,859 @@
+/* Aquí creo una serie de etilos de colores que mas utilizo de forma que sea mas cómodo utilizarlos */
+:root{
+    --blanco: #FFFFFF;
+    --oscuroPrimario: #323232;
+    --colorGenero: #DC9CFB;
+    --colorGaleria: #48E97D;
+    --colorLanzamientos: #FFA902;
+    --colorFilosofia: #3C50FF;
+    --colorContacto: #AB0101;
+    --piePagina: #091019; 
+    --oscuroContacto: #232A2D;
+    --colorFondo: #AB0167;
+    --colorBoton: #F49600;
+    --colorPestana: #CBA477;
+    --transparencia: rgba(0, 0, 0, 0.7);
+}
+
+
+/*Esto es el reset original*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* Formato del modal de bienvenida */
+#modalBienvenida {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--transparencia);
+    position: fixed;
+    display: none;
+    z-index: 5;
+}
+
+#modalBox {
+    width: 800px;
+    height: 500px;
+    background-color: var(--blanco);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Media/modalBox.png);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding: 50px;
+    text-align: center;
+    border-radius: 25px;
+}
+
+#modalBox>h1 {
+    font-size: 5rem;
+    font-family: "Cinzel Decorative", serif;
+    color: var(--blanco);
+    font-weight: normal;
+    margin-bottom: 70px;
+}
+
+#modalBox>button {
+    font-family: "Cinzel Decorative", serif;
+    font-size: 3rem;
+    padding: 20px 40px;
+    border-radius: 15px;
+    background-color: var(--piePagina);
+    color: var(--blanco);
+    transition-duration: 0.5s;
+}
+
+#modalBox >button:hover {
+    color: var(--piePagina);
+    background: linear-gradient(to right, #d9190f 0%, #e05515 25%, var(--colorLanzamientos) 50%, #e05515 75%, #d9190f 100%);
+}
+
+
+/* Esta parte es la del Hero Image */
+#encabezado {
+    width: 100%;
+    height: 1000px;
+}
+
+.fondosHero {
+    width: 100%;
+    height: 1000px;
+    background-size: cover;
+    position: absolute;
+}
+
+#fondoHero1 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../Media/HeroImage.jpg);
+    z-index: 3;
+}
+
+#fondoHero2 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../Media/HeroImage2.jpg);
+    z-index: 2;
+}
+
+#fondoHero3 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../Media/HeroImage3.jpg);
+    z-index: 1;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.mainSlide {
+    animation-name: mainSlideAnim;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.nextSlide {
+    animation-name: nextSlideAnim;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.hiddenSlide {
+    display: none;
+}
+
+@keyframes mainSlideAnim {
+    0%{margin-left: 0%;}
+    100%{margin-left: -100%;}
+}
+
+@keyframes nextSlideAnim {
+    0%{margin-left: 100%;}
+    100%{margin-left: 0%;}
+}
+
+
+/* Aqui empieza el menú de las opciones */
+nav {
+    width: 100%;
+    height: 150px;
+    background-color: var(--transparencia);
+    /* overflow: hidden; */
+    font-size: 2rem;
+    position: fixed;
+    top: 0;
+    z-index: 5;
+    transition-property: top, height, font-size;
+    transition-duration: 0.75s;
+}
+
+#logo {
+    width: auto;
+    height: 100%;
+    float: left;
+    margin-left: 100px;
+    padding: 18px;
+    transition-property: padding;
+    transition-duration: 0.75s;
+}
+
+#opciones {
+    list-style: none;
+    width: auto;
+    overflow: hidden;
+    float: right;
+    margin-right: 75px;
+    line-height: 150px;
+    transition-property: line-height;
+    transition-duration: 0.75s;
+}
+
+.elementoOpciones {
+    float: left;
+    margin: 0px 25px;
+}
+
+.elementoOpciones>a {
+    font-family: "Chakra Petch", sans-serif;
+    color: var(--blanco);
+    text-decoration: none;
+    /* font-size: 2rem; */
+    transition-property: color;
+    transition-duration: 0.5s;
+}
+
+.elementoOpciones >a:hover {
+    color: var(--colorContacto);
+}
+
+
+/* Aqui empieza el submenu de Genero */
+#subGenero {
+    width: auto;
+    height: auto;
+    list-style: none;
+    position: absolute;
+    top: 100px;
+    z-index: 1;
+    display: none;
+    background-color: var(--transparencia);
+}
+
+.elementoGenero {
+    width: 100%;
+    height: 40px;
+    line-height: 50px;
+    margin: 3px;
+}
+
+.elementoGenero>a {
+    font-family: "Chakra Petch", sans-serif;
+    text-decoration: none;
+    color: var(--blanco);
+    font-size: 1.75rem;
+    transition-property: color;
+    transition-duration: 0.5s;
+}
+
+.elementoGenero >a:hover {
+    color: var(--colorContacto);
+}
+
+/* Esta regla permite desplegar el submenu */
+.elementoOpciones:hover #subGenero {
+    display: block;
+}
+
+/* Aqui empieza el submenu de Proximos Lanzamientos */
+#subLanz {
+    width: auto;
+    height: auto;
+    list-style: none;
+    position: absolute;
+    top: 100px;
+    z-index: 1;
+    display: none;
+    background-color: var(--transparencia);
+}
+
+.elementoLanz {
+    width: 100%;
+    height: 40px;
+    line-height: 50px;
+    margin: 3px;
+}
+
+.elementoLanz>a {
+    font-family: "Chakra Petch", sans-serif;
+    text-decoration: none;
+    color: var(--blanco);
+    font-size: 1.75rem;
+    transition-property: color;
+    transition-duration: 0.5s;
+}
+
+.elementoLanz >a:hover {
+    color: var(--colorContacto);
+}
+
+.elementoOpciones:hover #subLanz {
+    display: block;
+}
+
+
+#tituloCabecera {
+    font-size: 11rem;
+    font-family: "Cinzel Decorative", serif;
+    color: var(--blanco);
+    text-shadow: 0px 9px 6px #000000;
+    text-align: center;
+    position: relative;
+    top: 300px;
+    z-index: 4;
+    animation-name: fadein;
+    animation-duration: 3s;
+}
+
+#subTituloCabecera {
+    font-size: 3rem;
+    font-family: "Cinzel Decorative", serif;
+    color: var(--blanco);
+    text-align: center;
+    position: relative;
+    top: 330px;
+    z-index: 4;
+    animation-name: fadeinSub;
+    animation-duration: 3s;
+}
+
+@keyframes fadein {
+    0% {opacity: 0; top: 100px;}
+    /* 50% {opacity: 1; top: 200px;} */
+    100% {opacity: 1; top: 300px}
+}
+
+@keyframes fadeinSub {
+    0% {opacity: 0; top: 530px;}
+    /* 50% {opacity: 1; top: 200px;} */
+    100% {opacity: 1; top: 330px}
+}
+/* Aqui se acaba el header */
+
+
+/* Aqui empieza la sección de Género */
+#genero {
+    width: 100%;
+    height: 1210px;
+    background-color: var(--oscuroPrimario);
+    overflow: hidden;
+}
+
+.tituloGenero {
+    font-family: "Cinzel Decorative", serif;
+    color: var(--colorGenero);
+}
+
+#contenedorEtiquetasGenero {
+    width: 1100px;
+    background-color: var(--oscuroPrimario);
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+}
+
+.etiquetaGenero {
+    font-family: "Chakra Petch", sans-serif;
+    font-size: 2.5rem;
+    color: var(--blanco);
+    width: 20%;
+    float: left;
+    text-align: center;
+    transition-property: color;
+    transition-duration: 0.5s;
+}
+
+.pestanaActiva {
+    color: var(--colorGenero);
+}
+
+.contenedorCategoria {
+    width: 1275px;
+    height: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.juego {
+    width: calc(33.33% - 75px);
+    height: calc(50% - 75px);
+    float: left;
+    margin-top: 37.5px;
+    margin-bottom: 37.5px;
+    margin-left: 37.5px;
+    margin-right: 37.5px;
+}
+
+@keyframes animCategoria {
+    from {
+        transform: translateX(-100%); 
+        opacity: 0; 
+    }
+    to {
+        transform: translateX(0); 
+        opacity: 1;
+    }
+}
+
+.animacionCategorias {
+    animation-name: animCategoria;
+    animation-duration: 1s;
+}
+
+.imagenJuego {
+    width: 100%;
+    height: 250px;
+    background-color: var(--blanco);
+    overflow: hidden;
+    border-style: groove;
+    border-color: var(--colorPestana);
+}
+
+.imagenJuego img{
+    width: auto;
+    height: auto;
+    transition-property: transform;
+    transition-duration: 0.3s;
+}
+
+.imagenJuego img:hover{
+    transform: scale(1.2,1.2);
+}
+
+.nombreJuego {
+    text-align: center;
+    color: var(--blanco);
+    margin-top: 12px;
+    font-family: "Chakra Petch", sans-serif;
+    font-size: 1.25rem;
+}
+
+.precioJuego {
+    text-align: center;
+    color: var(--colorGenero);
+    margin-top: 12px;
+    font-family: "Chakra Petch", sans-serif;
+    font-size: 1.25rem;
+}
+
+
+/* Aqui empieza la sección de Galeria */
+#galeria {
+    width: 100%;
+    height: 1080px;
+    /* background-color: var(--colorLanzamientos); */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../Media/GaleriaImage.png);
+    overflow: hidden;
+}
+
+.tituloGaleria {
+    color: var(--colorGaleria);
+}
+
+#contenedorGaleria {
+    width: 1210px;
+    height: 525px;
+    margin-top: 95px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.imagenGaleria {
+    width: calc(25% - 10px);
+    height: calc(33.33% - 10px);
+    float: left;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    border-style: solid;
+    border-image: linear-gradient(to bottom right, var(--colorBoton), var(--colorContacto)) 1;
+    border-width: 3px;
+}
+
+.imagenGaleria img{
+    width: auto;
+    height: auto;
+    transition-property: transform;
+    transition-duration: 0.3s;
+}
+
+.imagenGaleria:hover {
+    box-shadow: 1px 1px 10px 7px var(--colorLanzamientos);
+    cursor: pointer;
+}
+
+/* Aquí doy formato al lightbox de Galería */
+#modalLightBoxG {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--transparencia);
+    position: fixed;
+    display: none;
+    top: 0;
+    z-index: 5;
+}
+
+#imageToShow {
+    width: 18vw;
+    height: auto;
+    /* background-color: var(--blanco); */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    /* padding: 50px; */
+    text-align: center;
+}
+
+.imageLightBox {
+    width: 100%;
+    height: auto;
+    border-radius: 25px;
+}
+
+/* Aqui se le da formato a los botones de Galeria y Proximos Lanzamientos */
+.lbButtons {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--piePagina);
+    border-style: solid;
+    border-width: 5px;
+    border-color: var(--blanco);
+}
+
+.lbButtons:hover {
+    border-color: var(--colorContacto);
+    transition-property: all;
+    transition-duration: 0.3s;
+}
+
+.lbbRight {
+    right: 30px;
+}
+
+.lbbLeft {
+    left: 30px;
+}
+
+.lbButtons i {
+    font-size: 4rem;
+    color: var(--blanco);
+}
+
+.lbButtons:hover i {
+    color: var(--colorContacto);
+    transition-property: all;
+    transition-duration: 0.3s;
+}
+
+
+/* Aqui empieza la seccion de Próximos Lanzamientos */
+#proximosLanzamientos {
+    width: 100%;
+    height: 1210px;
+    background-color: var(--oscuroPrimario);
+    overflow: hidden;
+}
+
+.tituloLanzamientos {
+    font-family: "Cinzel Decorative", serif;
+    color: var(--colorLanzamientos);
+}
+
+#contenedorEtiquetasLanzamientos {
+    width: 200px;
+    background-color: var(--oscuroPrimario);
+    margin-top: 250px;
+    margin-left: 450px;
+    margin-right: auto;
+    float: left;
+}
+
+.etiquetaLanzamiento {
+    font-family: "Chakra Petch", sans-serif;
+    font-size: 2.5rem;
+    color: var(--blanco);
+    width: 20%;
+    text-align: center;
+    line-height: 2.5;
+}
+
+.ps5 {
+    color: var(--colorFilosofia);
+}
+
+.switch {
+    color: var(--colorContacto);
+}
+
+.xbox {
+    color: var(--colorGaleria);
+}
+
+.pc {
+    color: var(--colorGenero);
+}
+
+#contenedorLanzamiento {
+    width: 1275px;
+    height: 800px;
+    margin-top: 110px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.juegoLanzamiento {
+    width: calc(33.33% - 75px);
+    height: calc(50% - 75px);
+    float: right;
+    margin-bottom: 57.5px;
+    margin-left: 57.5px;
+    margin-right: 50px;
+}
+
+.imagenJuegoLanz img{
+    width: 100%;
+    height: 100%;
+    border-style: groove;
+    border-color: var(--colorPestana);
+}
+
+.imagenJuegoLanz:hover {
+    box-shadow: 1px 1px 10px 7px var(--colorBoton);
+    cursor: pointer;
+}
+
+/* Aquí doy formato al lightbox de Proximos Lanzamientos */
+#modalLightBoxLanz {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--transparencia);
+    position: fixed;
+    display: none;
+    top: 0;
+    z-index: 5;
+}
+
+#imageToShowLanz {
+    width: 68vw;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+}
+
+.imageLightBoxLanz {
+    width: 100%;
+    height: auto;
+    border-radius: 55px;
+}
+
+
+/* Aqui empieza la sección de Filosofía */
+#filosofia {
+    width: 100%;
+    height: 1080px;
+    background-color:#121639;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../Media/FilosofíaImage.jpg);
+    overflow: hidden;
+}
+
+.tituloSeccion {
+    font-family: "Cinzel Decorative", serif;
+    font-size: 4rem;
+    text-align: center;
+    margin-top: 200px;
+}
+
+.tituloFilosofia {
+    color: var(--colorFilosofia);
+}
+
+#contenedorFilosofia {
+    width: 1200px;
+    height: 500px;
+    margin-top: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+}
+
+.columnaFilo {
+    width: 50%;
+    height: 500px;
+    float: left;
+}
+
+#videoFilosofia {
+    width: calc(100% - 65px);
+    background-color: var(--blanco);
+    height: 300px;
+    margin-left: 75px;
+}
+
+.columnaFilo>p {
+    font-family: "Chakra Petch", sans-serif;
+    font-size: 1.3rem;
+    padding-right: 75px;
+    line-height: 1.2;
+    letter-spacing: 3px;
+    color:  var(--blanco);
+
+}
+/* Aqui empieza la sección de Contacto */
+#contacto {
+    width: 100%;
+    height: 1000px;
+    background-color: var(--oscuroContacto);
+    overflow: hidden;
+}
+
+.tituloContacto {
+    color: var(--colorContacto);
+}
+
+#contenedorContacto {
+    width: 1200px;
+    height: 600px;
+    margin-top: 95px;
+    margin-right: auto;
+    margin-left: auto;
+    overflow: hidden;
+}
+
+#map {
+    float: left;
+}
+
+#textoFormulario {
+    font-family: "Chakra Petch", sans-serif;
+    font-size: 2.5rem;
+    color: var(--colorContacto);
+}
+
+#formulario {
+    width: 50%;
+    height: 525px;
+    float: left;
+    padding-top: 25px;
+    padding-left: 60px;
+    padding-right: 40px;
+}
+
+input {
+    display: block;
+    height: 40px;
+    margin-top: 25px;
+    width: 500px;
+    font-family: "Chakra Petch", sans-serif;
+    font-size: 1.3rem;
+}
+
+/* #contenedorBoton {
+     display: flex;
+    justify-content: flex-end;
+} */
+
+#botonReservar {
+    width: 150px;
+    border-style: none;
+    background-color: var(--colorLanzamientos);
+    font-size: 1.5rem;
+    padding: 5px;
+    margin-right: 25px;
+    float: right;
+    transition-property: all;
+    transition-duration: 0.8s;
+}
+
+#botonReservar:hover{
+    border-style: solid;
+    border-color: var(--colorLanzamientos);
+    color: var(--colorBoton);
+    background: linear-gradient(to right, var(--colorFondo) 0%, var(--oscuroPrimario) 50%, var(--colorFondo) 100%);
+}
+
+#botonComprar {
+    width: 150px;
+    border-style: none;
+    background-color: var(--colorGaleria);
+    font-size: 1.5rem;
+    padding: 5px;
+    float: right;
+    transition-property: all;
+    transition-duration: 0.8s;
+}
+
+#botonComprar:hover{
+    border-style: solid;
+    border-color: var(--colorLanzamientos);
+    color: var(--colorBoton);
+    background: linear-gradient(to right, var(--colorFondo) 0%, var(--oscuroPrimario) 50%, var(--colorFondo) 100%);
+}
+
+/* Formato del modal de Reserva y Compra */
+.modalRyC {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--transparencia);
+    position: fixed;
+    top: 0px;
+    display: none;
+    z-index: 5;
+}
+
+#modalReservar .modalBox{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Media/boton1.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#modalComprar .modalBox{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Media/boton1.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.modalBox {
+    width: 800px;
+    height: 325px;
+    background-color: var(--blanco);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding: 40px;
+    text-align: center;
+    border-radius: 25px;
+}
+
+.modalBox>h1 {
+    font-size: 2rem;
+    font-family: "Cinzel Decorative", serif;
+    color: var(--blanco);
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.modalBox>p {
+    font-size: 1.25rem;
+    text-align: center;
+    font-family: "Chakra Petch", sans-serif;
+    color: var(--blanco);
+    margin-bottom: 20px;
+}
+
+.modalBox>button {
+    font-family: "Cinzel Decorative", serif;
+    font-size: 2rem;
+    padding: 10px 15px;
+    border-radius: 15px;
+    background-color: var(--piePagina);
+    color: var(--blanco);
+    transition-duration: 0.5s;
+}
+
+.modalBox >button:hover {
+    color: var(--colorLanzamientos);
+    background: linear-gradient(to right, #0a063a 0%, #0f1696 25%, var(--colorFilosofia) 50%, #0f1696 75%, #0a063a 100%);
+}
+
+
+/* Esta es la parte de footer */
+#pieDePagina {
+    width: 100%;
+    height: 100px;
+    background-color: var(--piePagina);
+    text-align: center;
+}
+
+#pieDePagina i { 
+    line-height: 100px;
+    font-size: 3rem;
+    color: var(--blanco);
+    padding: 0px 50px;
+    transition-property: color;
+    transition-duration: 0.5s;
+}
+
+#pieDePagina i:hover{
+    color: var(--colorContacto);
+}
