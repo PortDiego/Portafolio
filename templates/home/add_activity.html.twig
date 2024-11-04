@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Añadir Actividad{% endblock %}
+
+{% block body %}
+    <h1>Añadir una nueva Actividad</h1>
+    
+    {{ form_start(form) }}
+     
+       
+        {{ form_row(form.fecha) }}     
+        {{ form_row(form.subcategory) }}
+        
+        <button class="btn btn-primary">Guardar Actividad</button>
+    {{ form_end(form) }}
+{% endblock %}
