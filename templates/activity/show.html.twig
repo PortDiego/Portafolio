@@ -13,11 +13,13 @@
             </tr>
             <tr>
                 <th>Categoria</th>
-                <td>{{ activity.categoria }}</td>
+                <td>{{ activity.subcategory.category.nameCat }}</td>
+                <td>{{ activity.subcategory.name }}</td>
+                
             </tr>
             <tr>
                 <th>Fecha</th>
-                <td>{{ activity.fecha ? activity.fecha|date('Y-m-d') : '' }}</td>
+                <td>{{ activity.date ? activity.date|date('d-m-Y') : '' }}</td>
             </tr>
         </tbody>
     </table>

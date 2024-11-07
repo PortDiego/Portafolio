@@ -22,7 +22,7 @@ class Category
     private Collection $Subcategory;
 
     #[ORM\Column(length: 255)]
-    private ?string $nombre_cat = null;
+    private ?string $name_cat = null;
 
     public function __construct()
     {
@@ -64,14 +64,14 @@ class Category
         return $this;
     }
 
-    public function getNombreCat(): ?string
+    public function getNameCat(): ?string
     {
-        return $this->nombre_cat;
+        return $this->name_cat;
     }
 
-    public function setNombreCat(string $nombre_cat): static
+    public function setNameCat(string $name_cat): static
     {
-        $this->nombre_cat = $nombre_cat;
+        $this->name_cat = $name_cat;
 
         return $this;
     }

@@ -21,7 +21,7 @@ class Activity
   
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $fecha = null;
+    private ?\DateTimeInterface $date = null;
 
   
 
@@ -39,8 +39,7 @@ class Activity
     #[ORM\OneToMany(targetEntity: ImagenActivity::class, mappedBy: 'activity')]
     private \Doctrine\Common\Collections\Collection $ImagenActivity;
 
-    #[ORM\Column(length: 255 )]
-    private ?string $url = null;
+
 
     public function __construct()
     {
@@ -56,14 +55,14 @@ class Activity
 
    
 
-    public function getFecha(): ?\DateTimeInterface
+    public function getDate(): ?\DateTimeInterface
     {
-        return $this->fecha;
+        return $this->date;
     }
 
-    public function setFecha(\DateTimeInterface $fecha): static
+    public function setDate(\DateTimeInterface $date): static
     {
-        $this->fecha = $fecha;
+        $this->date = $date;
 
         return $this;
     }
@@ -121,16 +120,16 @@ class Activity
 
         return $this;
     }
-
-    public function getUrl(): ?string
+    private ?string $brochureFilename = null;
+    public function getBrochureFilename(): ?string
     {
-        return $this->url;
+        return $this->brochureFilename;
     }
-
-    public function setUrl(string $url): static
+    public function setBrochureFilename(string $brochureFilename): self
     {
-        $this->url = $url;
-
+        $this->brochureFilename = $brochureFilename;
         return $this;
     }
+
+
 }

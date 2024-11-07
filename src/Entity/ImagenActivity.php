@@ -17,7 +17,7 @@ class ImagenActivity
     private ?string $url = null;
 
     #[ORM\Column(length: 255, nullable:false)]
-    private ?string $fecha = null;
+    private ?string $date = null;
 
     #[ORM\ManyToOne(targetEntity: Activity::class, inversedBy: 'ImagenActivity')]
     #[ORM\JoinColumn(nullable: false)]
@@ -40,14 +40,14 @@ class ImagenActivity
         return $this;
     }
 
-    public function getFecha(): ?string
+    public function getDate(): ?string
     {
-        return $this->fecha;
+        return $this->date;
     }
 
-    public function setFecha(string $fecha): static
+    public function setDate(string $date): static
     {
-        $this->fecha = $fecha;
+        $this->date = $date;
 
         return $this;
     }

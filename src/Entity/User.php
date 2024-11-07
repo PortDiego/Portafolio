@@ -19,13 +19,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
     #[ORM\Column(length: 255)]
-    private ?string $nombre = null;
+    private ?string $name = null;
     #[ORM\Column(length: 255)]
-    private ?string $apellido1 = null;
+    private ?string $lastname1 = null;
     #[ORM\Column(length: 255)]
-    private ?string $apellido2 = null;
+    private ?string $lastname2 = null;
     #[ORM\Column]
-    private ?int $telefono = null;
+    private ?int $phone = null;
 
     #[ORM\Column(length: 180)]
     private ?string $email = null;
@@ -50,40 +50,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->Activity = new ArrayCollection();
     }
-    public function getNombre(): ?string
+    public function getName(): ?string
     {
-        return $this->nombre;
+        return $this->name;
     }
-    public function setNombre(string $nombre): static
+    public function setNombre(string $name): static
     {
-        $this->nombre = $nombre;
+        $this->name = $name;
         return $this;
     }
-    public function getApellido1(): ?string
+    public function getLastName1(): ?string
     {
-        return $this->apellido1;
+        return $this->lastname1;
     }
-    public function setApellido1(string $apellido1): static
+    public function setLastName1(string $lastname1): static
     {
-        $this->apellido1 = $apellido1;
+        $this->lastname1 = $lastname1;
         return $this;
     }
-    public function getApellido2(): ?string
+    public function getLastName2(): ?string
     {
-        return $this->apellido2;
+        return $this->lastname2;
     }
-    public function setApellido2(string $apellido2): static
+    public function setLastName2(string $lastname2): static
     {
-        $this->apellido2 = $apellido2;
+        $this->lastname2 = $lastname2;
         return $this;
     }
-    public function getTelefono(): ?string
+    public function getPhone(): ?string
     {
-        return $this->telefono;
+        return $this->phone;
     }
-    public function setTelefono(string $telefono): static
+    public function setPhone(string $phone): static
     {
-        $this->telefono = $telefono;
+        $this->phone = $phone;
         return $this;
     }
 

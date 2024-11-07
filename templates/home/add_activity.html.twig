@@ -8,9 +8,11 @@
     {{ form_start(form) }}
      
        
-        {{ form_row(form.fecha) }}     
+        {{ form_row(form.date) }}
+        {{ form_row(form.category)}}     
         {{ form_row(form.subcategory) }}
         
         <button class="btn btn-primary">Guardar Actividad</button>
+        
     {{ form_end(form) }}
 {% endblock %}

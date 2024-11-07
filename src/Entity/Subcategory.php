@@ -15,7 +15,7 @@ class Subcategory
     #[ORM\Column]
     private ?int $id = null;
     #[ORM\Column(length: 255)]
-    private ?string $nombre = null;
+    private ?string $name = null;
 
     /**
      * @var Collection<int, Activity>
@@ -29,7 +29,7 @@ class Subcategory
 
     public function __construct()
     {
-        $this->nombre = new ArrayCollection();
+        $this->activities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -40,13 +40,13 @@ class Subcategory
     /**
      * @return Collection<int, Activity>
      */
-    public function getNombre(): ?string
+    public function getName(): ?string
     {
-        return $this->nombre;
+        return $this->name;
     }
-    public function setNombre(string $nombre): static
+    public function setName(string $name): static
     {
-        $this->nombre = $nombre;
+        $this->name = $name;
         return $this;
     }
 
@@ -90,6 +90,6 @@ class Subcategory
     }
     public function __toString(): string
     {
-        return $this->nombre; 
+        return $this->name; 
     }
 }

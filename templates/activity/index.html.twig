@@ -19,7 +19,7 @@
             <tr>
                 <td>{{ activity.id }}</td>
                 <td>{{ activity.subcategory }}</td>
-                <td>{{ activity.fecha ? activity.fecha|date('d-m-Y') : '' }}</td>
+                <td>{{ activity.date ? activity.date|date('d-m-Y') : '' }}</td>
                 <td>
                     <a href="{{ path('app_activity_show', {'id': activity.id}) }}">show</a>
                     <a href="{{ path('app_activity_edit', {'id': activity.id}) }}">edit</a>
