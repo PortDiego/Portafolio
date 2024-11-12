@@ -22,7 +22,7 @@ class ActivityType extends AbstractType
                 'class' => Category:: class,
                 'choice_label' => 'name_cat',
                 'placeholder' => 'Selecciona una categoria',
-                'mapped' => false,
+                'mapped' => true,
                 'required' => true,
             ])
             ->add('subcategory', EntityType::class, [
@@ -30,6 +30,8 @@ class ActivityType extends AbstractType
                 'choice_label' => 'name', 
                 'label' => 'Subcategoría',
                 'placeholder' => 'Seleccione una subcategoría',
+                'mapped' => true,  // Se mapeará directamente a la entidad Activity
+                'required' => false,
             ])
             ->add('date', DateType::class, [
                 'widget' => 'single_text',
@@ -41,7 +43,7 @@ class ActivityType extends AbstractType
                 'required' => false, // Es opcional
                 'by_reference' => false,
             ]);
-    }
+    }   
 
     public function configureOptions(OptionsResolver $resolver): void
     {

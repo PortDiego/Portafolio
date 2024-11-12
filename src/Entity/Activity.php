@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Entity\ArrayCollection;
 use App\Entity\Collection;
 use App\Entity\Subcategory;
+use App\Entity\Category;
 use phpDocumentor\Reflection\Types\Nullable;
 
 #[ORM\Entity(repositoryClass: ActivityRepository::class)]
@@ -23,6 +24,9 @@ class Activity
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
+    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\JoinColumn(name: "category_id", referencedColumnName: "id", nullable: false)]
+    private ?Category $category = null;
   
 
     #[ORM\ManyToOne(inversedBy: 'Activity')]
@@ -63,6 +67,17 @@ class Activity
     public function setDate(\DateTimeInterface $date): static
     {
         $this->date = $date;
+
+        return $this;
+    }
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

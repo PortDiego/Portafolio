@@ -16,3 +16,43 @@
         
     {{ form_end(form) }}
 {% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    var categoriaSelect = document.getElementById('activity_category');
+    var subcategoriaSelect = document.getElementById('activity_subcategory');
+
+    // Actualizar las subcategorías según la categoría seleccionada
+    function actualizarSubcategorias() {
+        var categoriaId = categoriaSelect.value;
+
+        // Limpiar las opciones previas
+        subcategoriaSelect.innerHTML = '<option value="">Selecciona una subcategoría</option>';
+
+        if (!categoriaId) {
+            return;
+        }
+
+        // Hacer la solicitud para obtener las subcategorías
+        fetch('/get-subcategorias/' + categoriaId)
+            .then(response => response.json())
+            .then(subcategorias => {
+                subcategorias.forEach(function(subcategoria) {
+                    var option = new Option(subcategoria.name, subcategoria.id);
+                    subcategoriaSelect.appendChild(option);
+                });
+            })
+            .catch(function(error) {
+                console.error('Error al cargar las subcategorías:', error);
+            });
+    }
+
+    // Escuchar cambios en el campo de categoría
+    categoriaSelect.addEventListener('change', actualizarSubcategorias);
+});
+
+</script>
+{% endblock %}

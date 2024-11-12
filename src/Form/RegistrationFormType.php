@@ -21,21 +21,21 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nombre', TextType::class, [
+            ->add('name', TextType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter your first name',
                     ]),
                 ],
             ])
-            ->add('apellido1', TextType::class, [
+            ->add('lastname1', TextType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter your last name',
                     ]),
                 ],
             ])
-            ->add('apellido2', TextType::class, [
+            ->add('lastname2', TextType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter your second last name',
@@ -49,7 +49,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('telefono', TelType::class, [
+            ->add('phone', TelType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter your phone number',

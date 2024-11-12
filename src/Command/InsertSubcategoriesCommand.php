@@ -45,7 +45,7 @@ class InsertSubcategoriesCommand extends Command
 
         foreach ($subcategories1 as $subcategoryName) {
             $subcategory = new Subcategory();
-            $subcategory->setNombre($subcategoryName);
+            $subcategory->setName($subcategoryName);
             $subcategory->setCategory($category1);
 
             $this->entityManager->persist($subcategory);
@@ -61,7 +61,7 @@ class InsertSubcategoriesCommand extends Command
 
         foreach ($subcategories2 as $subcategoryName) {
             $subcategory = new Subcategory();
-            $subcategory->setNombre($subcategoryName);
+            $subcategory->setName($subcategoryName);
             $subcategory->setCategory($category2);
 
             $this->entityManager->persist($subcategory);
