@@ -5,7 +5,10 @@ namespace App\DataFixtures;
 use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\DependencyInjection\Attribute\When;
 
+
+#[When("test")]
 class CategoryFixtures extends Fixture
 {
     public const CATEGORY_REFERENCES = [

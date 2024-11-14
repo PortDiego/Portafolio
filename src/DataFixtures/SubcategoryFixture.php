@@ -6,11 +6,14 @@ use App\Entity\Subcategory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Symfony\Component\DependencyInjection\Attribute\When;
 
+#[When("test")]
 class SubcategoryFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
+        echo "cargando subcategorias...\n";
         // Subcategorías para Montaña
         $this->createSubcategory('Senderismo', 'montana', $manager);
         $this->createSubcategory('Escalada Clasica', 'montana', $manager);
@@ -45,26 +48,31 @@ class SubcategoryFixtures extends Fixture implements DependentFixtureInterface
 
         $manager->flush();
     }
-
-    private function createSubcategory(string $name, string $categoryReference, ObjectManager $manager): void
-    {
-        $subcategory = new Subcategory();
-        $subcategory->setName($name);
-
-        // Obtiene la categoría asociada usando la referencia
-        $category = $this->getReference($categoryReference);
-        if ($category) {
-            $subcategory->setCategory($category);
-            $manager->persist($subcategory);
-        } else {
-            throw new \Exception("No se encontró la referencia para la categoría '$categoryReference'");
-        }
-    }
-
     public function getDependencies(): array
     {
         return [
             CategoryFixtures::class,
         ];
     }
+    
+
+    private function createSubcategory(string $name, string $categoryReference, ObjectManager $manager): void
+    {
+       echo "Intentando cargar subcategorias: $name para la categoria: $categoryReference\n";
+
+       if (!$this->hasReference($categoryReference)){
+        echo "No se encontro la referencia para la categoria '{$categoryReference}'\n";
+        return;
+       }
+       $subcategory = new Subcategory();
+       $subcategory->setName($name);
+       $category = $this->getReference($categoryReference);
+       $subcategory->setCategory($category);
+       $manager->persist($subcategory);
+
+
+       
+    }
+
+    
 }
