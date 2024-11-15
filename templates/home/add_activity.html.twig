@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Añadir nueva Actividad{% endblock %}
+
+{% block body %}
+    <h1>Añadir nueva Actividad</h1>
+
+    {{ form_start(form) }}
+    
+        {{ form_row(form.category) }}
+        {{ form_row(form.date) }}
+
+        <div id="subcategory-container" style="display: none;">
+            <label for="subcategory-select">Subcategoria</label>
+            <select id="subcategory-select" class="form-control">
+                <option value="">Selecciona una Subcategoria</option>
+            </select>
+        </div>
+
+        <button class="btn btn-primary">Guardar Categoria</button>
+    {{ form_end(form) }}
+
+    <script>
+        document.querySelector('.category-select').addEventListener('change', function() {
+            let categoryId = this.value;
+            let subcategoryContainer = document.getElementById('subcategory-container');
+            let subcategorySelect = document.getElementById('subcategory-select');
+
+            if (categoryId){
+                fetch(`/get_subcategory?category_id=${categoryId}`)
+                .then(response => response.json())
+                .then(data => {
+                    subcategorySelect.innerHTML = '<option value="">Select a Subcategory</option>';
+                    data.forEach(subcategory => {
+                        subcategorySelect.innerHTML += `<option value="${subcategory.id}">${subcategory.nameSub}</option>`;
+                    });
+                    subcategoryContainer.style.display = 'block';
+                })
+                .catch(error => console.error('Error loading subcategories:', error));
+            } else {
+                subcategoryContainer.style.display = 'none';
+                subcategorySelect.innerHTML = '<option value="">Select a Subcategory</option>';
+            }
+        });
+    </script>
+{% endblock %}
