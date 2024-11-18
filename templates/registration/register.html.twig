@@ -1,48 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Registro{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
-    
-    {{ form_errors(registrationForm) }}
-    {{ form_start(registrationForm) }}
-    
-    <div>
-        <label for="Name:"></label>
-        {{ form_row(registrationForm.name) }}
-    </div>
-    <div>
-        <label for="FirstSurname:"></label>
-        {{ form_row(registrationForm.firstSurname) }}
-    </div>
-    <div>
-        <label for="SecondSurname:"></label>
-        {{ form_row(registrationForm.secondSurname) }}
-    </div>
-    <div>
-        <label for="Phone:"></label>
-        {{ form_row(registrationForm.phone) }}
-    </div>
-    <div>
-        <label for="Email:"></label>
-        {{ form_row(registrationForm.email) }}
-    </div>
-    <div>
-        <label for="plainPassword"></label>
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-    </div>
-    <div>
-        {{ form_row(registrationForm.agreeTerms) }}
-        <label for="Accept Terms"></label>
-    </div>
-    
-    <button type="submit" class="btn">Register</button>
-    
-    {{ form_end(registrationForm) }}
+    <div class="container">
+        <h1 class="mb-4 text-primary">Registro</h1>
+        
+        <div class="card shadow-sm p-4">
+            {{ form_errors(registrationForm) }}
+            {{ form_start(registrationForm) }}
+            
+            <div class="mb-3">
+                <label for="registrationForm_name" class="form-label">Nombre:</label>
+                {{ form_widget(registrationForm.name, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3">
+                <label for="registrationForm_firstSurname" class="form-label">Primer Apellido:</label>
+                {{ form_widget(registrationForm.firstSurname, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3">
+                <label for="registrationForm_secondSurname" class="form-label">Segundo Apellido:</label>
+                {{ form_widget(registrationForm.secondSurname, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3">
+                <label for="registrationForm_phone" class="form-label">Teléfono:</label>
+                {{ form_widget(registrationForm.phone, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3">
+                <label for="registrationForm_email" class="form-label">Correo Electrónico:</label>
+                {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3">
+                <label for="registrationForm_plainPassword" class="form-label">Contraseña:</label>
+                {{ form_widget(registrationForm.plainPassword, {
+                    'label': 'Contraseña',
+                    'attr': {'class': 'form-control'}
+                }) }}
+            </div>
+            <div class="mb-3 form-check">
+                {{ form_widget(registrationForm.agreeTerms, {
+                    'attr': {'class': 'form-check-input'}
+                }) }}
+                <label for="registrationForm_agreeTerms" class="form-check-label">Aceptar Términos</label>
+            </div>
 
-    <a href="{{ path('app_login') }}">You are already registered, log in</a>
+            <button type="submit" class="btn btn-primary w-100">Registrar</button>
+            
+            {{ form_end(registrationForm) }}
+
+            <div class="mt-3 text-center">
+                <a href="{{ path('app_login') }}" class="text-muted">¿Ya está registrado? Inicie sesión</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
-

@@ -3,22 +3,43 @@
 {% block title %}Añadir nueva Actividad{% endblock %}
 
 {% block body %}
-    <h1>Añadir nueva Actividad</h1>
+    <div class="container mt-5">
+        <div class="card shadow-sm border-primary">
+            <div class="card-body">
+                <h1 class="mb-4 text-primary">Añadir nueva Actividad</h1>
 
-    {{ form_start(form) }}
-    
-        {{ form_row(form.category) }}
-        {{ form_row(form.date) }}
+                {{ form_start(form) }}
+                    <div class="mb-3">
+                        {{ form_label(form.category, 'Categoría') }}
+                        <div class="input-group">
+                            {{ form_widget(form.category, {'attr': {'class': 'form-control border-primary'}}) }}
+                        </div>
+                        {{ form_errors(form.category) }}
+                    </div>
 
-        <div id="subcategory-container" style="display: none;">
-            <label for="subcategory-select">Subcategoria</label>
-            <select id="subcategory-select" class="form-control">
-                <option value="">Selecciona una Subcategoria</option>
-            </select>
+                    <div class="mb-3">
+                        {{ form_label(form.date, 'Fecha de la Actividad') }}
+                        <div class="input-group">
+                            {{ form_widget(form.date, {'attr': {'class': 'form-control border-primary'}}) }}
+                        </div>
+                        {{ form_errors(form.date) }}
+                    </div>
+
+                    <div id="subcategory-container" class="mb-3" style="display: none;">
+                        <label for="subcategory-select" class="form-label">Subcategoria</label>
+                        <select id="subcategory-select" class="form-control border-primary">
+                            <option value="">Selecciona una Subcategoria</option>
+                        </select>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Guardar Actividad</button>
+                        <a href="{{ path('app_home') }}" class="btn btn-outline-secondary">Cancelar</a>
+                    </div>
+                {{ form_end(form) }}
+            </div>
         </div>
-
-        <button class="btn btn-primary">Guardar Categoria</button>
-    {{ form_end(form) }}
+    </div>
 
     <script>
         document.querySelector('.category-select').addEventListener('change', function() {

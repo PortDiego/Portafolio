@@ -7,27 +7,41 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         <link rel="stylesheet" href="{{ asset('style/app.css') }}">
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
             {{ encore_entry_link_tags('adminkit') }}
+            {{ encore_entry_link_tags('app') }}
         
         {% endblock %}
 
         {% block javascripts %}
+            {{ encore_entry_script_tags('adminkit_js') }}
             {{ encore_entry_script_tags('app') }}
-            {{ encore_entry_script_tags('adminkit') }}
+            
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
     <body>
         {% block body %}
-            <nav class="navbar navbar-expand-lg navbar-light bg-light px-1">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                 <div class="container-fluid">
+                    <a class="navbar-brand" href="{{ path('app_home') }}">AdminKit</a>
                     <div class="collapse navbar-collapse" id="navbar-collapsable">
-                        <a class="nav-link text-black-50" href="{{path('app_login')}}">Log In</a>
-                        <a href="#" class="btn btn-dark">Sign up</a>
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="{{ path('app_login') }}">Log In</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="btn btn-outline-light">Sign up</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </nav>
+
+            <!-- Main Content -->
+            <div class="container my-4">
+                {% block content %}{% endblock %}
+            </div>
         {% endblock %}
     </body>
 </html>
