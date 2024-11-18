@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/activity')]
 final class ActivityController extends AbstractController{
@@ -82,4 +83,5 @@ public function new(Request $request, FileUploader $fileUploader): Response
 
         return $this->redirectToRoute('app_activity_index', [], Response::HTTP_SEE_OTHER);
     }
+    
 }

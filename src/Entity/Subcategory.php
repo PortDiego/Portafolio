@@ -23,7 +23,7 @@ class Subcategory
     #[ORM\OneToMany(targetEntity: Activity::class, mappedBy: 'subcategory')]
     private Collection $activities;
 
-    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'subcategory')]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'subcategories')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null; // Relación con Category
 

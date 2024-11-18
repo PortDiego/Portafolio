@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20241112093003 extends AbstractMigration
+final class Version20241118102419 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -23,6 +23,7 @@ final class Version20241112093003 extends AbstractMigration
         $this->addSql('ALTER TABLE activity ADD category_id INT NOT NULL');
         $this->addSql('ALTER TABLE activity ADD CONSTRAINT FK_AC74095A12469DE2 FOREIGN KEY (category_id) REFERENCES category (id)');
         $this->addSql('CREATE INDEX IDX_AC74095A12469DE2 ON activity (category_id)');
+        $this->addSql('ALTER TABLE category ADD active TINYINT(1) NOT NULL');
     }
 
     public function down(Schema $schema): void
@@ -31,5 +32,6 @@ final class Version20241112093003 extends AbstractMigration
         $this->addSql('ALTER TABLE activity DROP FOREIGN KEY FK_AC74095A12469DE2');
         $this->addSql('DROP INDEX IDX_AC74095A12469DE2 ON activity');
         $this->addSql('ALTER TABLE activity DROP category_id');
+        $this->addSql('ALTER TABLE category DROP active');
     }
 }

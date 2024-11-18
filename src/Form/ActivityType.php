@@ -12,18 +12,25 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Doctrine\ORM\EntityRepository;
 
 class ActivityType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('category', EntityType::class, [
-                'class' => Category:: class,
-                'choice_label' => 'name_cat',
-                'placeholder' => 'Selecciona una categoria',
-                'mapped' => true,
-                'required' => true,
+        ->add('category', EntityType::class, [
+            'class' => Category::class, 
+            'choice_label' => 'name_cat', 
+            'label' => 'Categoría',
+            'placeholder' => 'Selecciona una Categoría', 
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('c')
+                          ->where('c.active = :active')
+                          ->setParameter('active', true);
+            },
+            'mapped' => false,
+            'attr' => ['class' => 'category-select'],
             ])
             ->add('subcategory', EntityType::class, [
                 'class' => Subcategory::class,
@@ -32,6 +39,8 @@ class ActivityType extends AbstractType
                 'placeholder' => 'Seleccione una subcategoría',
                 'mapped' => true,  // Se mapeará directamente a la entidad Activity
                 'required' => false,
+                'attr' =>['class' => 'subcategory-select'],
+                'choices' => [],
             ])
             ->add('date', DateType::class, [
                 'widget' => 'single_text',

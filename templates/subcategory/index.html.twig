@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Subcategories{% endblock %}
+
+{% block body %}
+<style>
+    .container { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
+    th { background-color: #f4f4f4; }
+</style>
+
+<div class="container">
+    <h1>List of Subcategories</h1>
+
+    <a href="{{ path('app_subcategory_new') }}" class="btn btn-primary">Add New Subcategory</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Accions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subcategory in subcategories %}
+                <tr>
+                    <td>{{ subcategory.nameSub }}</td>
+                    <td>{{ subcategory.category.nameCat }}</td>
+                    <td>
+                        <a href="{{ path('app_subcategory_show', {id: subcategory.id}) }}">View</a> |
+                        <a href="{{ path('app_subcategory_edit', {id: subcategory.id}) }}">Edit</a> |
+                        <form action="{{ path('app_subcategory_delete', {id: subcategory.id}) }}" method="post" style="display:inline;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ subcategory.id) }}">
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete this subcategory?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">There are no registered subcategories</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

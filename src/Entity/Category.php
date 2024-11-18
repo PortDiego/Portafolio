@@ -19,14 +19,16 @@ class Category
      * @var Collection<int, Subcategory>
      */
     #[ORM\OneToMany(targetEntity: Subcategory::class, mappedBy: 'category')]
-    private Collection $Subcategory;
+    private Collection $subcategories;
 
     #[ORM\Column(length: 255)]
     private ?string $name_cat = null;
+    #[ORM\Column(type: "boolean")] 
+    private bool $active;
 
     public function __construct()
     {
-        $this->Subcategory = new ArrayCollection();
+        $this->subcategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -39,13 +41,13 @@ class Category
      */
     public function getSubcategory(): Collection
     {
-        return $this->Subcategory;
+        return $this->subcategories;
     }
 
     public function addSubcategory(Subcategory $subcategory): static
     {
-        if (!$this->Subcategory->contains($subcategory)) {
-            $this->Subcategory->add($subcategory);
+        if (!$this->subcategories->contains($subcategory)) {
+            $this->subcategories->add($subcategory);
             $subcategory->setCategory($this);
         }
 
@@ -54,7 +56,7 @@ class Category
 
     public function removeSubcategory(Subcategory $subcategory): static
     {
-        if ($this->Subcategory->removeElement($subcategory)) {
+        if ($this->subcategories->removeElement($subcategory)) {
             // set the owning side to null (unless already changed)
             if ($subcategory->getCategory() === $this) {
                 $subcategory->setCategory(null);
@@ -75,4 +77,16 @@ class Category
 
         return $this;
     }
+    // Getters y setters para `active`
+    public function isActive(): bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+        return $this;
+    }
+
 }
