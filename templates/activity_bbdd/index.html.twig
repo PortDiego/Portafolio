@@ -1,20 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ActivityBBDDController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/XAMPP_V2/htdocs/personal-activity-dev/src/Controller/ActivityBBDDController.php</code></li>
-        <li>Your template at <code>C:/XAMPP_V2/htdocs/personal-activity-dev/templates/activity_bbdd/index.html.twig</code></li>
-    </ul>
-</div>
+    <div class="container mt-4">
+        <!-- Título de la página -->
+        <h1 class="mb-4 text-center text-primary">Lista de Actividades</h1>
+        
+        <!-- Botón para crear nueva actividad con icono -->
+        <a href="{{ path('app_activity_bbdd_new') }}" class="btn btn-success mb-4">
+            <i class="bi bi-plus-circle"></i> Crear nueva actividad
+        </a>
+        
+        <!-- Tabla de actividades -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title">Actividades Registradas</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col" class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for activity in activitiesBBDD %}
+                            <tr>
+                                <td>{{ activity.id }}</td>
+                                <td>{{ activity.name }}</td>
+                                <td class="text-center">
+                                    <!-- Botón Editar con icono -->
+                                    <a href="{{ path('app_activity_bbdd_edit', {'id': activity.id}) }}" class="btn btn-warning btn-sm">
+                                        <i class="bi bi-pencil-square"></i> Editar
+                                    </a>
+                                    <!-- Formulario Eliminar con confirmación -->
+                                    <form action="{{ path('app_activity_bbdd_delete', {'id': activity.id}) }}" method="post" class="d-inline" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta actividad?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ activity.id) }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="bi bi-trash"></i> Eliminar
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}
