@@ -23,7 +23,7 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
         ]);
-    } 
+    }
     #[Route('/home/add-activity', name: 'add_activity')]
     public function addActivity(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -32,18 +32,21 @@ class HomeController extends AbstractController
 
         $form->handleRequest($request);
 
-        try{
-            if ($form->isSubmitted() && $form->isValid()) {
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
             $activity->setUser($this->getUser());  // Asigna la actividad al usuario actual
             $entityManager->persist($activity);
             $entityManager->flush();
-
             return $this->redirectToRoute('app_home');
         }
-    }catch (\Exception $e) {
-            return new JsonResponse(['success' => false, 'message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
-            
-        }
+
+
+
+
+
+
+
 
         return $this->render('home/add_activity.html.twig', [
             'form' => $form->createView(),
@@ -72,5 +75,5 @@ class HomeController extends AbstractController
 
         return $this->json($data);
     }
+    
 }
-

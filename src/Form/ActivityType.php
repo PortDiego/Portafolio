@@ -41,11 +41,10 @@ class ActivityType extends AbstractType
                 'mapped' => true,  // Se mapeará directamente a la entidad Activity
                 'required' => false,
                 'attr' =>['class' => 'subcategory-select'],
-                'choices' => [],
+                
                 'query_builder'=> function (EntityRepository $er){
-                    return $er->createQueryBuilder('c')
-                          ->where('c.active = :active')
-                          ->setParameter('active', true);
+                    return $er->createQueryBuilder('c');
+                          
             },
             ])
             ->add('activityBBDD', EntityType::class,[
@@ -56,7 +55,7 @@ class ActivityType extends AbstractType
                 'mapped'=> true,
                 'required'=>false,
                 'attr'=>['class'=> 'activityBBDD-select'],
-                'choices'=>[],
+                
                 
             ])
             ->add('date', DateType::class, [

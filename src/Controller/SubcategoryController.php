@@ -85,32 +85,32 @@ final class SubcategoryController extends AbstractController
 
         return $this->redirectToRoute('app_subcategory_index', [], Response::HTTP_SEE_OTHER);
     }
-    // Método para manejar la solicitud de subcategorías dinámicas
-    #[Route('/subcategory/get_subcategory/{id}', name: 'get_subcategory', methods: ['GET'])]
-    public function getSubcategoriesByCategory(Request $request, int $id, SubcategoryRepository $subcategoryRepository): JsonResponse
-    {
-        // Obtener el id de la categoría desde la solicitud GET
-        $categoryId = $id;
-        
-        // Si se recibe un id de categoría
-        if ($categoryId) {
-            // Encuentra las subcategorías asociadas a la categoría seleccionada
-            $subcategories = $subcategoryRepository->findBy(['category' => $categoryId]);
+   // Método para manejar la solicitud de subcategorías dinámicas
+   #[Route('/subcategory/get_subcategory/{id}', name: 'get_subcategory', methods: ['GET'])]
+   public function getSubcategoriesByCategory(Request $request, int $id, SubcategoryRepository $subcategoryRepository): JsonResponse
+   {
+       // Obtener el id de la categoría desde la solicitud GET
+       $categoryId = $id;
+       
+       // Si se recibe un id de categoría
+       if ($categoryId) {
+           // Encuentra las subcategorías asociadas a la categoría seleccionada
+           $subcategories = $subcategoryRepository->findBy(['category' => $categoryId]);
 
-            // Prepara la respuesta en formato JSON
-            $data = [];
-            foreach ($subcategories as $subcategory) {
-                $data[] = [
-                    'id' => $subcategory->getId(),
-                    'name' => $subcategory->getName(), // Utilizando 'name' de Subcategory
-                ];
-            }
+           // Prepara la respuesta en formato JSON
+           $data = [];
+           foreach ($subcategories as $subcategory) {
+               $data[] = [
+                   'id' => $subcategory->getId(),
+                   'name' => $subcategory->getName(), // Utilizando 'name' de Subcategory
+               ];
+           }
 
-            return new JsonResponse($data);
-        }
+           return new JsonResponse($data);
+       }
 
-        // Si no se proporciona un category_id, retorna un error 400
-        return new JsonResponse([], 400); 
-    }
+       // Si no se proporciona un category_id, retorna un error 400
+       return new JsonResponse([], 400); 
+   }
 
 }
