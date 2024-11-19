@@ -17,6 +17,12 @@
                 'attr' : {'id': 'subcategory-select'}
             })}}
         </div>
+        <div id="activityBBDD-container" >
+            {{form_row(form.activityBBDD, {
+                'attr' : {'id': 'activityBBDD-select'}
+            })}}
+        </div>
+        
         {{ form_row(form.date)}}     
         
        
@@ -32,20 +38,20 @@
     document.addEventListener('DOMContentLoaded', function(){
         
         document.getElementById('activity_category').addEventListener('change', function() {
-            console.log('entro')
             let categoryId = this.value;
             let subcategoryContainer = document.getElementById('subcategory-container');
             let subcategorySelect = document.getElementById('activity_subcategory');
-            console.log(categoryId)
+            
+            console.log("entro")
             if (categoryId){
-                console.log('category id:', categoryId);
+                console.log(categoryId)
                 let url = `/subcategory/get_subcategory/${categoryId}`;
-                console.log("URL solicitada", url);
+                
                 fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    console.log('data', data)
-                    subcategorySelect.innerHTML = '<option value="">Select a Subcategory</option>';
+                    
+                    subcategorySelect.innerHTML = '<option value="">Selecciona una Subcategoria</option>';
 
                     data.forEach(subcategory => {
                         subcategorySelect.innerHTML += `<option value="${subcategory.id}">${subcategory.name}</option>`;
@@ -58,7 +64,35 @@
                 subcategorySelect.innerHTML = '<option value="">Select a Subcategory</option>';
             }
         });
-    })
-        
-</script>
+        document.getElementById('activity_subcategory').addEventListener('change', function() {
+                let subcategoryId = this.value;
+                let activityBBDDContainer = document.getElementById('activityBBDD-container');
+                let activityBBDDSelect = document.getElementById('activity_activityBBDD');
+                console.log("Subcategoría seleccionada:", subcategoryId);
+
+                if (subcategoryId) {
+                    let url = `/activitybbdd/get_activitybbdd/${subcategoryId}`;
+                    console.log("Haciendo solicitud a:", url);
+
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log("Respuesta de la API:", data); 
+                            activityBBDDSelect.innerHTML = '<option value="">Selecciona una Actividad</option>';
+
+                            data.forEach(activity => {
+                                activityBBDDSelect.innerHTML += `<option value="${activity.id}">${activity.name}</option>`;
+                            });
+                            activityBBDDContainer.style.display = 'block';
+                        })
+                        .catch(error => console.error('Error loading activities:', error));
+                } else {
+                    console.log("No se encontraron actividades para esta subcategoría.");
+                    activityBBDDContainer.style.display = 'none';
+                    activityBBDDSelect.innerHTML = '<option value="">Selecciona una Actividad</option>';
+                }
+            });
+        });
+    </script>
 {% endblock %}
+    

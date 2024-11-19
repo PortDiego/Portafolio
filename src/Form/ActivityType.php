@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Activity;
 use App\Entity\Category;
 use App\Entity\Subcategory; 
+use App\Entity\ActivityBBDD;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,7 +30,7 @@ class ActivityType extends AbstractType
                           ->where('c.active = :active')
                           ->setParameter('active', true);
             },
-            'mapped' => false,
+            'mapped' => true,
             'attr' => ['class' => 'category-select'],
             ])
             ->add('subcategory', EntityType::class, [
@@ -41,6 +42,22 @@ class ActivityType extends AbstractType
                 'required' => false,
                 'attr' =>['class' => 'subcategory-select'],
                 'choices' => [],
+                'query_builder'=> function (EntityRepository $er){
+                    return $er->createQueryBuilder('c')
+                          ->where('c.active = :active')
+                          ->setParameter('active', true);
+            },
+            ])
+            ->add('activityBBDD', EntityType::class,[
+                'class'=>ActivityBBDD::class,
+                'choice_label'=> 'name',
+                'label'=> 'Lista de Actividades',
+                'placeholder'=> 'Seleccione una actividad',
+                'mapped'=> true,
+                'required'=>false,
+                'attr'=>['class'=> 'activityBBDD-select'],
+                'choices'=>[],
+                
             ])
             ->add('date', DateType::class, [
                 'widget' => 'single_text',

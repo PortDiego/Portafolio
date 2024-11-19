@@ -37,6 +37,10 @@ class Activity
     #[ORM\JoinColumn(nullable: false)]
     private ?Subcategory $subcategory = null;
 
+    #[ORM\ManyToOne(targetEntity: ActivityBBDD::class, inversedBy: 'Activity')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?ActivityBBDD $activityBBDD = null;
+
     /**
      * @var \Doctrine\Common\Collections\Collection<int, ImagenActivity>
      */
@@ -102,6 +106,18 @@ class Activity
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getActivityBBDD(): ?ActivityBBDD
+    {
+        return $this->activityBBDD;
+    }
+
+    public function setActivityBBDD(?ActivityBBDD $activityBBDD)
+    {
+        $this->activityBBDD = $activityBBDD;
 
         return $this;
     }
