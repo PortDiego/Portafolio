@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ImagenActivity index{% endblock %}
+
+{% block body %}
+    <h1>ImagenActivity index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Url</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for imagen_activity in imagen_activities %}
+            <tr>
+                <td>{{ imagen_activity.id }}</td>
+                <td>{{ imagen_activity.url }}</td>
+                <td>{{ imagen_activity.date }}</td>
+                <td>
+                    <a href="{{ path('app_imagen_activity_show', {'id': imagen_activity.id}) }}">show</a>
+                    <a href="{{ path('app_imagen_activity_edit', {'id': imagen_activity.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_imagen_activity_new') }}">Create new</a>
+{% endblock %}

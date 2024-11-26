@@ -16,10 +16,10 @@ class ImagenActivity
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url = null;
 
-    #[ORM\Column(length: 255, nullable:false)]
-    private ?string $date = null;
+    #[ORM\Column(type: 'datetime_immutable', nullable: false)]
+    private ?\DateTimeImmutable $date = null;
 
-    #[ORM\ManyToOne(targetEntity: Activity::class, inversedBy: 'ImagenActivity')]
+    #[ORM\ManyToOne(targetEntity: Activity::class, inversedBy: 'imagenes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Activity $activity = null;
 
@@ -40,12 +40,12 @@ class ImagenActivity
         return $this;
     }
 
-    public function getDate(): ?string
+    public function getDate(): ?\DateTimeImmutable
     {
         return $this->date;
     }
 
-    public function setDate(string $date): static
+    public function setDate(\DateTimeImmutable $date): static
     {
         $this->date = $date;
 

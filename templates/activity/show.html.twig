@@ -23,6 +23,17 @@
             </tr>
         </tbody>
     </table>
+    {# Nueva sección para imágenes asociadas #}
+    <h2>Imágenes</h2>
+    <ul>
+        {% for imagen in activity.imagenes %}
+            <li>
+                <img src="{{ asset('uploads/' ~ imagen.url) }}" alt="Imagen {{ loop.index }}" style="max-width: 200px; max-height: 200px;">
+            </li>
+        {% else %}
+            <li>No hay imágenes asociadas a esta actividad.</li>
+        {% endfor %}
+    </ul>
 
     <a href="{{ path('app_activity_index') }}">back to list</a>
 

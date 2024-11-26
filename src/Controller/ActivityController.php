@@ -26,19 +26,35 @@ final class ActivityController extends AbstractController{
     }
 
     #[Route('/new', name: 'app_activity_new', methods: ['GET', 'POST'])]
-public function new(Request $request, FileUploader $fileUploader): Response
+public function new(Request $request, FileUploader $fileUploader, EntityManagerInterface $entityManager): Response
 {
     $activity = new Activity();
     $form = $this->createForm(ActivityType::class, $activity);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-        $brochureFile = $form->get('brochure')->getData();
-        if ($brochureFile){
-            $brochureFileName = $fileUploader->upload($brochureFile);
-            $activity->setBrochureFilename($brochureFileName);
-        }
+        // Manejo de las imágenes subidas
+        $imagenes = $form->get('imagenes')->getData(); // Campo FileType del formulario
         
+        foreach ($imagenes as $imagenFile) {
+            // Subir cada archivo
+            $imagenFilename = $fileUploader->upload($imagenFile);
+            
+            // Crear una nueva instancia de ImagenActivity
+            $imagenActivity = new ImagenActivity();
+            $imagenActivity->setUrl($imagenFilename);
+            $imagenActivity->setDate(new \DateTimeImmutable());
+            $imagenActivity->setActivity($activity);
+
+            // Asociar la imagen con la actividad
+            $entityManager->persist($imagenActivity);
+        }
+
+        // Persistir la actividad
+        $entityManager->persist($activity);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_activity_index', [], Response::HTTP_SEE_OTHER);
     }
 
     return $this->render('activity/new.html.twig', [

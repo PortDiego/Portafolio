@@ -62,10 +62,11 @@ class ActivityType extends AbstractType
                 'widget' => 'single_text',
                 'label' => 'Fecha de la actividad',
             ])
-            ->add('imagenes', FileType::class, [
-                'multiple'=>true,    //permite subir multiples imagenes
-                'mapped' => false,   // No mapea directamente a una entidad
-                'required' => false, // Es opcional
+            ->add('imagenes', CollectionType::class, [
+                'entry_type' => FileType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'mapped' => false, 
                 'by_reference' => false,
             ]);
     }   

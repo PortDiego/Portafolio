@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ImagenActivity{% endblock %}
+
+{% block body %}
+    <h1>Create new ImagenActivity</h1>
+
+    {{ include('imagen_activity/_form.html.twig') }}
+
+    <a href="{{ path('app_imagen_activity_index') }}">back to list</a>
+{% endblock %}
