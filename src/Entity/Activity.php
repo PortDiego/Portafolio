@@ -5,12 +5,11 @@ namespace App\Entity;
 use App\Repository\ActivityRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\ArrayCollection;
+use App\Entity\Collection;
 use App\Entity\Subcategory;
 use App\Entity\Category;
-use App\Repository\ImagenActivityRepository;
 use phpDocumentor\Reflection\Types\Nullable;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: ActivityRepository::class)]
 class Activity
@@ -45,13 +44,15 @@ class Activity
     /**
      * @var \Doctrine\Common\Collections\Collection<int, ImagenActivity>
      */
-    #[ORM\OneToMany(targetEntity: ImagenActivity::class, mappedBy: 'activity', cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private Collection $imagenes;
+    #[ORM\OneToMany(targetEntity: ImagenActivity::class, mappedBy: 'activity')]
+    private \Doctrine\Common\Collections\Collection $ImagenActivity;
+
+
 
     public function __construct()
     {
-        $this->imagenes = new ArrayCollection();
-    }
+        $this->ImagenActivity = new \Doctrine\Common\Collections\ArrayCollection();
+    }  
 
    
 
@@ -124,30 +125,24 @@ class Activity
     /**
      * @return \Doctrine\Common\Collections\Collection<int, ImagenActivity>
      */
-    public function getImagenes(): \Doctrine\Common\Collections\Collection
+    public function getImagenActivity(): \Doctrine\Common\Collections\Collection
     {
-        return $this->imagenes;
-    }
-    public function setImagenes(?ImagenActivity $imagenActivity)
-    {
-        $this->imagenes = $imagenActivity;
-
-        return $this;
+        return $this->ImagenActivity;
     }
 
-    public function addImagen(ImagenActivity $imagenActivity): static
+    public function addImagenActivity(ImagenActivity $imagenActivity): static
     {
-        if (!$this->imagenes->contains($imagenActivity)) {
-            $this->imagenes->add($imagenActivity);
+        if (!$this->ImagenActivity->contains($imagenActivity)) {
+            $this->ImagenActivity->add($imagenActivity);
             $imagenActivity->setActivity($this);
         }
 
         return $this;
     }
 
-    public function removeImagen(ImagenActivity $imagenActivity): static
+    public function removeImagenActivity(ImagenActivity $imagenActivity): static
     {
-        if ($this->imagenes->removeElement($imagenActivity)) {
+        if ($this->ImagenActivity->removeElement($imagenActivity)) {
             // set the owning side to null (unless already changed)
             if ($imagenActivity->getActivity() === $this) {
                 $imagenActivity->setActivity(null);

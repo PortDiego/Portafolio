@@ -8,5 +8,3 @@ get_subcategory:
     path: /subcategory/get_subcategory/{id}
     controller: App\Controller\SubcategoryController::getSubcategoriesByCategory
 
-
-
