@@ -9,15 +9,11 @@
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ activity.id }}</td>
-            </tr>
-            <tr>
-                <th>Category</th>
-                <td>{{ activity.category }}</td>
+                <td>{{ finishedActivity.id }}</td>
             </tr>
             <tr>
                 <th>Date</th>
-                <td>{{ activity.date ? activity.date|date('Y-m-d') : '' }}</td>
+                <td>{{ finishedActivity.date ? activity.date|date('Y-m-d') : '' }}</td>
             </tr>
         </tbody>
     </table>

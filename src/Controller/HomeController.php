@@ -23,22 +23,7 @@ class HomeController extends AbstractController
     #[Route('/home/add-activity', name: 'add_activity')]
     public function addActivity(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $activity = new FinishedActivity();
-        $form = $this->createForm(FinishedActivityType::class, $activity);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $activity->setUser($this->getUser());  // Asigna la actividad al usuario actual
-            $entityManager->persist($activity);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_home');
-        }
-
-        return $this->render('home/add_activity.html.twig', [
-            'form' => $form->createView(),
-        ]);
+       /*  return $this->redirectToRoute('app_activity_new'); */
     }
 }
 

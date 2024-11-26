@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Nueva Actividad{% endblock %}
+
 {% block body %}
     <div class="container mt-4">
         <!-- Título de la página -->
         <h1 class="mb-4 text-center text-primary">Lista de Actividades</h1>
         
-        <!-- Botón para crear nueva actividad con icono -->
+        <!-- Botón para crear nueva actividad -->
         <a href="{{ path('app_activity_bbdd_new') }}" class="btn btn-success mb-4">
             <i class="bi bi-plus-circle"></i> Crear nueva actividad
         </a>
@@ -16,7 +18,7 @@
                 <h5 class="card-title">Actividades Registradas</h5>
             </div>
             <div class="card-body">
-                <table class="table table-striped table-hover">
+                <table id="activityBBDD_table" class="table table-striped table-hover">
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">ID</th>
@@ -30,11 +32,11 @@
                                 <td>{{ activity.id }}</td>
                                 <td>{{ activity.name }}</td>
                                 <td class="text-center">
-                                    <!-- Botón Editar con icono -->
+                                    <!-- Botón Editar -->
                                     <a href="{{ path('app_activity_bbdd_edit', {'id': activity.id}) }}" class="btn btn-warning btn-sm">
                                         <i class="bi bi-pencil-square"></i> Editar
                                     </a>
-                                    <!-- Formulario Eliminar con confirmación -->
+                                    <!-- Formulario Eliminar -->
                                     <form action="{{ path('app_activity_bbdd_delete', {'id': activity.id}) }}" method="post" class="d-inline" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta actividad?');">
                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ activity.id) }}">
                                         <button type="submit" class="btn btn-danger btn-sm">
@@ -49,4 +51,14 @@
             </div>
         </div>
     </div>
+
+    <!-- Iniciar JS de DataTables -->
+    <script>
+        $(document).ready( function() {
+            $('#activityBBDD_table').DataTable({
+                responsive:true
+            });
+        });
+
+    </script>
 {% endblock %}

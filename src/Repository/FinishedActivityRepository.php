@@ -7,7 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Activity>
+ * @extends ServiceEntityRepository<FinishedActivity>
  */
 class FinishedActivityRepository extends ServiceEntityRepository
 {
