@@ -15,8 +15,10 @@ class CategoryType extends AbstractType
         $builder
             ->add('name_cat', ChoiceType::class, [
                 'choices' => [
-                    'Mountain' => 'Mountain',
-                    'Aquatic' => 'Aquatic',
+                    'montana' => 'Montaña',
+                    'agua' => 'Agua',
+                    'nieve' => 'Nieve',
+
                 ],
                 'label' => 'Category',
                 'placeholder' => 'Select a Category',

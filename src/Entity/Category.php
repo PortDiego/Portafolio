@@ -23,7 +23,6 @@ class Category
 
     #[ORM\Column(length: 255)]
     private ?string $name_cat = null;
-
     #[ORM\Column(type: "boolean")] 
     private bool $active;
 
@@ -78,7 +77,6 @@ class Category
 
         return $this;
     }
-
     // Getters y setters para `active`
     public function isActive(): bool
     {

@@ -14,9 +14,8 @@ class Subcategory
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
     #[ORM\Column(length: 255)]
-    private ?string $name_sub = null;
+    private ?string $name = null;
 
     /**
      * @var Collection<int, ActivityBBDD>
@@ -26,11 +25,11 @@ class Subcategory
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'subcategories')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Category $category = null; 
+    private ?Category $category = null; // Relación con Category
 
     public function __construct()
     {
-        $this->activitiesBBDD = new ArrayCollection(); 
+        $this->activities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -38,14 +37,14 @@ class Subcategory
         return $this->id;
     }
 
-    public function getNameSub(): ?string
+    public function getName(): ?string
     {
-        return $this->name_sub;
+        return $this->name;
     }
 
-    public function setNameSub(string $name_sub): static
+    public function setName(string $name): static
     {
-        $this->name_sub = $name_sub;
+        $this->name = $name;
         return $this;
     }
 
@@ -88,6 +87,6 @@ class Subcategory
 
     public function __toString(): string
     {
-        return $this->name_sub; 
+        return $this->name; 
     }
 }
