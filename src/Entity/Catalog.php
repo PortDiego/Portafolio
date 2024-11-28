@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ActivityBBDDRepository;
+use App\Repository\CatalogRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Table(name: '`activityBBDD`')]
+#[ORM\Table(name: '`catalog`')]
 
-#[ORM\Entity(repositoryClass: ActivityBBDDRepository::class)]
-class ActivityBBDD
+#[ORM\Entity(repositoryClass: CatalogRepository::class)]
+class Catalog
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,7 +19,7 @@ class ActivityBBDD
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(targetEntity: FinishedActivity::class, mappedBy: 'activityBBDD')]
+    #[ORM\OneToMany(targetEntity: FinishedActivity::class, mappedBy: 'catalog')]
     private Collection $finishedActivity;
 
     #[ORM\ManyToOne(targetEntity: Subcategory::class, inversedBy: 'activitiesBBDD')]
@@ -75,7 +75,7 @@ class ActivityBBDD
     {
         if (!$this->finishedActivity->contains($activity)) {
             $this->finishedActivity->add($activity);
-            $activity->setActivityBBDD($this);
+            $activity->setCatalog($this);
         }
 
         return $this;
@@ -84,8 +84,8 @@ class ActivityBBDD
     public function removeFinishedActivity(FinishedActivity $activity): static
     {
         if ($this->finishedActivity->removeElement($activity)) {
-            if ($activity->getActivityBBDD() === $this) {
-                $activity->setActivityBBDD(null);
+            if ($activity->getCatalog() === $this) {
+                $activity->setCatalog(null);
             }
         }
 

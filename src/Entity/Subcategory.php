@@ -18,9 +18,9 @@ class Subcategory
     private ?string $name = null;
 
     /**
-     * @var Collection<int, ActivityBBDD>
+     * @var Collection<int, Catalog>
      */
-    #[ORM\OneToMany(targetEntity: ActivityBBDD::class, mappedBy: 'subcategory')]
+    #[ORM\OneToMany(targetEntity: Catalog::class, mappedBy: 'subcategory')]
     private Collection $activitiesBBDD;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'subcategories')]
@@ -48,26 +48,26 @@ class Subcategory
         return $this;
     }
 
-    public function getActivityBBDD(): Collection
+    public function getCatalog(): Collection
     {
         return $this->activitiesBBDD;
     }
 
-    public function addActivityBBDD(ActivityBBDD $activityBBDD): static
+    public function addCatalog(Catalog $catalog): static
     {
-        if (!$this->activitiesBBDD->contains($activityBBDD)) {
-            $this->activitiesBBDD->add($activityBBDD);
-            $activityBBDD->setSubcategory($this);
+        if (!$this->activitiesBBDD->contains($catalog)) {
+            $this->activitiesBBDD->add($catalog);
+            $catalog->setSubcategory($this);
         }
 
         return $this;
     }
 
-    public function removeActivityBBDDD(ActivityBBDD $activityBBDD): static
+    public function removeCatalogD(Catalog $catalog): static
     {
-        if ($this->activitiesBBDD->removeElement($activityBBDD)) {
-            if ($activityBBDD->getSubcategory() === $this) {
-                $activityBBDD->setSubcategory(null);
+        if ($this->activitiesBBDD->removeElement($catalog)) {
+            if ($catalog->getSubcategory() === $this) {
+                $catalog->setSubcategory(null);
             }
         }
 

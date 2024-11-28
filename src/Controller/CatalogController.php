@@ -3,18 +3,18 @@
 namespace App\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\ActivityBBDD;
-use App\Form\ActivityBBDDType;
-use App\Repository\ActivityBBDDRepository;
+use App\Entity\Catalog;
+use App\Form\CatalogType;
+use App\Repository\CatalogRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class ActivityBBDDController extends AbstractController
+class CatalogController extends AbstractController
 {
     #[Route('/activity_bbdd', name: 'app_activity_bbdd_index')]
-    public function index(ActivityBBDDRepository $repository): Response
+    public function index(CatalogRepository $repository): Response
     {
         $activitiesBBDD = $repository->findAll();
 
@@ -26,13 +26,13 @@ class ActivityBBDDController extends AbstractController
     #[Route('/activity_bbdd/new', name: 'app_activity_bbdd_new')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $activityBBDD = new ActivityBBDD();
-        $form = $this->createForm(ActivityBBDDType::class, $activityBBDD);
+        $catalog = new Catalog();
+        $form = $this->createForm(CatalogType::class, $catalog);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            $entityManager->persist($activityBBDD);
+            $entityManager->persist($catalog);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_activity_bbdd_index');
@@ -44,9 +44,9 @@ class ActivityBBDDController extends AbstractController
     }
 
     #[Route('/activity_bbdd/{id}/edit', name: 'app_activity_bbdd_edit')]
-    public function edit(Request $request, ActivityBBDD $finishedActivity, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Catalog $finishedActivity, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(ActivityBBDDType::class, $finishedActivity);
+        $form = $this->createForm(CatalogType::class, $finishedActivity);
 
         $form->handleRequest($request);
 
@@ -63,7 +63,7 @@ class ActivityBBDDController extends AbstractController
     }
 
     #[Route('/activity_bbdd/{id}/delete', name: 'app_activity_bbdd_delete')]
-    public function delete(Request $request, ActivityBBDD $finishedActivity, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Catalog $finishedActivity, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$finishedActivity->getId(), $request->request->get('_token'))){
             $entityManager->remove($finishedActivity);

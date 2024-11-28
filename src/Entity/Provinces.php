@@ -17,7 +17,7 @@ class Provinces
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: ActivityBBDD::class, mappedBy: 'provinces')]
+    #[ORM\ManyToMany(targetEntity: Catalog::class, mappedBy: 'provinces')]
     private Collection $activitiesBBDD;
 
     public function __construct()
@@ -40,7 +40,7 @@ class Provinces
         return $this;
     }
 
-    public function getActivityBBDDs(): Collection
+    public function getCatalogs(): Collection
     {
         return $this->activitiesBBDD;
     }

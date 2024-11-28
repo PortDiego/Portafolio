@@ -26,7 +26,7 @@
                             {{ form_errors(form.category) }}
                         </div>
 
-                        {{ form_row(form.activityBBDD, { 'attr': {'type': 'hidden', 'id': 'hiddenActivityId' }}) }}
+                        {{ form_row(form.catalog, { 'attr': {'type': 'hidden', 'id': 'hiddenActivityId' }}) }}
 
                         <div id="subcategory-container" class="mb-3" style="display: none;">
                             <label for="subcategory-select" class="form-label">Subcategoria</label>
@@ -68,7 +68,7 @@
                         var categorySelect = document.getElementById('finished_activity_category');
                         var subcategorySelect =  document.getElementById('subcategory-select');
                         var subcategoryContainer = document.getElementById('subcategory-container');
-                        var hiddenActivityId = document.getElementById('finished_activity_activityBBDD');
+                        var hiddenActivityId = document.getElementById('finished_activity_catalog');
 
                         function updateSubcategories(){
                             const categoryID = categorySelect.value;
@@ -95,7 +95,7 @@
                                 });
                         }
 
-                        function updateActivityBBDD(){
+                        function updateCatalog(){
                             const subcategoryID = subcategorySelect.value;
 
                             if (!subcategoryID) {
@@ -109,17 +109,17 @@
                                     if (data.id) {
                                         hiddenActivityId.value = data.id; 
                                     } else {
-                                        console.error('No se encontró ActivityBBDD.');
+                                        console.error('No se encontró Catalog.');
                                         hiddenActivityId.value = ''; // Si no se encuentra, vacía el campo
                                     }    
                                 })
                                 .catch(error => {
-                                    console.error('Error al obtener ActivityBBDD:', error);
+                                    console.error('Error al obtener Catalog:', error);
                                     hiddenActivityId.value = ''; 
                                 });
                         }
 
-                        subcategorySelect.addEventListener('change', updateActivityBBDD);
+                        subcategorySelect.addEventListener('change', updateCatalog);
 
                         categorySelect.addEventListener('change', updateSubcategories);
 

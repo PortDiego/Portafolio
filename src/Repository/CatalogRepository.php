@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\ActivityBBDD;
+use App\Entity\Catalog;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<ActivityBBDD>
+ * @extends ServiceEntityRepository<Catalog>
  */
-class ActivityBBDDRepository extends ServiceEntityRepository
+class CatalogRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ActivityBBDD::class);
+        parent::__construct($registry, Catalog::class);
     }
 
     //    /**
-    //     * @return ActivityBBDD[] Returns an array of ActivityBBDD objects
+    //     * @return Catalog[] Returns an array of Catalog objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class ActivityBBDDRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?ActivityBBDD
+    //    public function findOneBySomeField($value): ?Catalog
     //    {
     //        return $this->createQueryBuilder('a')
     //            ->andWhere('a.exampleField = :val')

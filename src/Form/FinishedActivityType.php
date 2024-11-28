@@ -5,7 +5,7 @@ namespace App\Form;
 use App\Entity\FinishedActivity;
 use App\Entity\Category; 
 use App\Entity\Subcategory;
-use App\Entity\ActivityBBDD;
+use App\Entity\Catalog;
 use App\Entity\Photo;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -52,8 +52,8 @@ class FinishedActivityType extends AbstractType
                 'attr' => ['accept' => 'image/*']
             ])
 
-            ->add('activityBBDD', EntityType::class, [
-                'class' => ActivityBBDD::class,
+            ->add('catalog', EntityType::class, [
+                'class' => Catalog::class,
                 'choice_label' => 'name',
                 'mapped' => true,
                 'required' => true,

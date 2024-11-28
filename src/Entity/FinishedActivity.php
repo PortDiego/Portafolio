@@ -28,9 +28,9 @@ class FinishedActivity
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(targetEntity: ActivityBBDD::class, inversedBy: 'finishedActivity')]
+    #[ORM\ManyToOne(targetEntity: Catalog::class, inversedBy: 'finishedActivity')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?ActivityBBDD $activityBBDD = null;
+    private ?Catalog $catalog = null;
 
     /**
      * @var Collection<int, Photo>
@@ -67,15 +67,15 @@ class FinishedActivity
         return $this;
     }
 
-    /* Relacion con ActivityBBDD */
-    public function getActivityBBDD(): ?ActivityBBDD
+    /* Relacion con Catalog */
+    public function getCatalog(): ?Catalog
     {
-        return $this->activityBBDD;
+        return $this->catalog;
     }
 
-    public function setActivityBBDD(?ActivityBBDD $activityBBDD): static
+    public function setCatalog(?Catalog $catalog): static
     {
-        $this->activityBBDD = $activityBBDD;
+        $this->catalog = $catalog;
 
         return $this;
     }

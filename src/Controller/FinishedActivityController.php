@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\ActivityBBDD; 
+use App\Entity\Catalog; 
 use App\Entity\FinishedActivity;
 use App\Entity\Photo;
 use App\Form\FinishedActivityType;
 use App\Repository\FinishedActivityRepository;
-use App\Repository\ActivityBBDDRepository;
+use App\Repository\CatalogRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,14 +34,14 @@ final class FinishedActivityController extends AbstractController{
         $form = $this->createForm(FinishedActivityType::class, $finishedActivity);
         $form->handleRequest($request);
 
-        $activityBBDD = null;
+        $catalog = null;
 
-        $activityBBDDId = $request->get('activityBBDD');
+        $catalogId = $request->get('catalog');
 
-        if ($activityBBDDId) {
-            $activityBBDD = $entityManager->getRepository(ActivityBBDD::class)->find($activityBBDDId);
-            if ($activityBBDD) {
-                $form->get('activityBBDD')->setData($activityBBDD);
+        if ($catalogId) {
+            $catalog = $entityManager->getRepository(Catalog::class)->find($catalogId);
+            if ($catalog) {
+                $form->get('catalog')->setData($catalog);
             } else {
                 $this->addFlash('error', 'No se encontró la actividad BBDD.');
             }
@@ -144,15 +144,15 @@ final class FinishedActivityController extends AbstractController{
     }
 
     #[Route('/activity_bbdd/{subcategoryId}', name: 'get_activity_bbdd', methods: ['GET'])]
-    public function getActivityBBDD($subcategoryId, EntityManagerInterface $entityManager): JsonResponse
+    public function getCatalog($subcategoryId, EntityManagerInterface $entityManager): JsonResponse
     {
-        $activityBBDDRepository = $entityManager->getRepository(ActivityBBDD::class);
-        $activityBBDD = $activityBBDDRepository->findOneBy(['subcategory' => $subcategoryId]);
+        $catalogRepository = $entityManager->getRepository(Catalog::class);
+        $catalog = $catalogRepository->findOneBy(['subcategory' => $subcategoryId]);
 
-        if ($activityBBDD) {
+        if ($catalog) {
             return $this->json([
-                'id' => $activityBBDD->getId(),
-                'name' => $activityBBDD->getName(),
+                'id' => $catalog->getId(),
+                'name' => $catalog->getName(),
             ]);
         }
     }

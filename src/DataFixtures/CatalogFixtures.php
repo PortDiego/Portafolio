@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\ActivityBBDD;
+use App\Entity\Catalog;
 use App\Entity\Subcategory;
 use App\Entity\Provinces;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -10,7 +10,7 @@ use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Symfony\Component\DependencyInjection\Attribute\When;
 
-class ActivityBBDDFixtures extends Fixture implements DependentFixtureInterface
+class CatalogFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -316,7 +316,7 @@ class ActivityBBDDFixtures extends Fixture implements DependentFixtureInterface
             
             // Verificar si la subcategoría y la provincia existen antes de crear la actividad
             if ($subcategory && $province) {
-                $activity = new ActivityBBDD();
+                $activity = new Catalog();
                 $activity->setName($activityData['name']);
                 $activity->setSubcategory($subcategory);
                 $activity->addProvince($province);
