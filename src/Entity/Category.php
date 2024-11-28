@@ -88,5 +88,4 @@ class Category
         $this->active = $active;
         return $this;
     }
-
 }

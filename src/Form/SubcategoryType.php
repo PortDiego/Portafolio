@@ -15,7 +15,7 @@ class SubcategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name_sub', TextType::class, [
+            ->add('name', TextType::class, [
                 'label' => 'Name of the Subcategory',
                 'attr' => ['placeholder' => 'Enter the name of the subcategory']
             ])

@@ -18,10 +18,10 @@ class Subcategory
     private ?string $name = null;
 
     /**
-     * @var Collection<int, Activity>
+     * @var Collection<int, ActivityBBDD>
      */
-    #[ORM\OneToMany(targetEntity: Activity::class, mappedBy: 'subcategory')]
-    private Collection $activities;
+    #[ORM\OneToMany(targetEntity: ActivityBBDD::class, mappedBy: 'subcategory')]
+    private Collection $activitiesBBDD;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'subcategories')]
     #[ORM\JoinColumn(nullable: false)]
@@ -29,7 +29,7 @@ class Subcategory
 
     public function __construct()
     {
-        $this->activities = new ArrayCollection();
+        $this->activitiesBBDD = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -37,40 +37,37 @@ class Subcategory
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, Activity>
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
+
     public function setName(string $name): static
     {
         $this->name = $name;
         return $this;
     }
 
-    public function getActivities(): Collection
+    public function getActivityBBDD(): Collection
     {
-        return $this->activities;
+        return $this->activitiesBBDD;
     }
 
-    public function addActivity(Activity $activity): static
+    public function addActivityBBDD(ActivityBBDD $activityBBDD): static
     {
-        if (!$this->activities->contains($activity)) {
-            $this->activities->add($activity);
-            $activity->setSubcategory($this);
+        if (!$this->activitiesBBDD->contains($activityBBDD)) {
+            $this->activitiesBBDD->add($activityBBDD);
+            $activityBBDD->setSubcategory($this);
         }
 
         return $this;
     }
 
-    public function removeActivity(Activity $activity): static
+    public function removeActivityBBDDD(ActivityBBDD $activityBBDD): static
     {
-        if ($this->activities->removeElement($activity)) {
-            // set the owning side to null (unless already changed)
-            if ($activity->getSubcategory() === $this) {
-                $activity->setSubcategory(null);
+        if ($this->activitiesBBDD->removeElement($activityBBDD)) {
+            if ($activityBBDD->getSubcategory() === $this) {
+                $activityBBDD->setSubcategory(null);
             }
         }
 
@@ -85,9 +82,9 @@ class Subcategory
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
-
         return $this;
     }
+
     public function __toString(): string
     {
         return $this->name; 

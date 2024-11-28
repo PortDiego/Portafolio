@@ -12,10 +12,10 @@
                 <th>Email</th>
                 <th>Roles</th>
                 <th>Password</th>
-                <th>Nombre</th>
-                <th>Apellido1</th>
-                <th>Apellido2</th>
-                <th>Telefono</th>
+                <th>Name</th>
+                <th>FirstSurname</th>
+                <th>SecondSurname</th>
+                <th>Phone</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -27,8 +27,8 @@
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>{{ user.password }}</td>
                 <td>{{ user.name }}</td>
-                <td>{{ user.lastname1 }}</td>
-                <td>{{ user.lastname2 }}</td>
+                <td>{{ user.firstSurname }}</td>
+                <td>{{ user.secondSurname }}</td>
                 <td>{{ user.phone }}</td>
                 <td>
                     <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>

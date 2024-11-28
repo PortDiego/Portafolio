@@ -19,8 +19,8 @@ class ActivityBBDD
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(targetEntity: Activity::class, mappedBy: 'activityBBDD')]
-    private Collection $activity;
+    #[ORM\OneToMany(targetEntity: FinishedActivity::class, mappedBy: 'activityBBDD')]
+    private Collection $finishedActivity;
 
     #[ORM\ManyToOne(targetEntity: Subcategory::class, inversedBy: 'activitiesBBDD')]
     #[ORM\JoinColumn(nullable: false)]
@@ -32,7 +32,7 @@ class ActivityBBDD
 
     public function __construct()
     {
-        $this->activity = new ArrayCollection();
+        $this->finishedActivity = new ArrayCollection();
         $this->provinces = new ArrayCollection();
     }
 
@@ -64,26 +64,26 @@ class ActivityBBDD
     }
 
     /**
-    * @return Collection<int, Activity>
+    * @return Collection<int, FinishedActivity>
     */
-    public function getActivity(): Collection
+    public function getFinishedActivity(): Collection
     {
-        return $this->activity;
+        return $this->finishedActivity;
     }
 
-    public function addActivity(Activity $activity): static
+    public function addFinishedActivity(FinishedActivity $activity): static
     {
-        if (!$this->activity->contains($activity)) {
-            $this->activity->add($activity);
+        if (!$this->finishedActivity->contains($activity)) {
+            $this->finishedActivity->add($activity);
             $activity->setActivityBBDD($this);
         }
 
         return $this;
     }
 
-    public function removeActivity(Activity $activity): static
+    public function removeFinishedActivity(FinishedActivity $activity): static
     {
-        if ($this->$activity->removeElement($activity)) {
+        if ($this->finishedActivity->removeElement($activity)) {
             if ($activity->getActivityBBDD() === $this) {
                 $activity->setActivityBBDD(null);
             }

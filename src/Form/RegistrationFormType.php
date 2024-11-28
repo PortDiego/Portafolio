@@ -28,14 +28,14 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('lastname1', TextType::class, [
+            ->add('firstSurname', TextType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter your last name',
                     ]),
                 ],
             ])
-            ->add('lastname2', TextType::class, [
+            ->add('secondSurname', TextType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter your second last name',

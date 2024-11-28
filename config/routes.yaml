@@ -3,8 +3,3 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
-
-get_subcategory:
-    path: /subcategory/get_subcategory/{id}
-    controller: App\Controller\SubcategoryController::getSubcategoriesByCategory
-

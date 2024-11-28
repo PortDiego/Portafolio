@@ -1,100 +1,134 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Añadir Actividad{% endblock %}
+{% block title %}Añadir nueva Actividad{% endblock %}
 
 {% block body %}
-    <h1>Añadir una nueva Actividad</h1>
-    
-    {{ form_start(form) }}
+    <div class="container mt-5">
+        <div class="card shadow-sm border-primary">
+            <div class="card-body">
+                <h1 class="mb-4 text-primary">Añadir nueva Actividad</h1>
 
-        
-     
-       
-        {{ form_row(form.category, {
-            'attr': {'id': 'activity_category'}
-        }) }}
-        
-        <div id="subcategory-container" >
-            {{form_row(form.subcategory, {
-                'attr' : {'id': 'subcategory-select'}
-            })}}
+                <form method="post" enctype="multipart/form-data">
+                    {{ form_start(form) }}
+                        <div class="mb-3">
+                            {{ form_label(form.name_activity, 'Nombre de la Actividad') }}
+                            <div class="input-group">
+                                {{ form_widget(form.name_activity, {'attr': {'class': 'form-control border-primary'}}) }}
+                            </div>
+                            {{ form_errors(form.name_activity) }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(form.category, 'Categoría') }}
+                            <div class="input-group">
+                                {{ form_widget(form.category, {'attr': {'class': 'form-control border-primary'}}) }}
+                            </div>
+                            {{ form_errors(form.category) }}
+                        </div>
+
+                        {{ form_row(form.activityBBDD, { 'attr': {'type': 'hidden', 'id': 'hiddenActivityId' }}) }}
+
+                        <div id="subcategory-container" class="mb-3" style="display: none;">
+                            <label for="subcategory-select" class="form-label">Subcategoria</label>
+                            <select id="subcategory-select" class="form-control border-primary">
+                                <option value="">Selecciona una Subcategoria</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(form.photos, 'Foto') }}
+                            <div class="input-group">
+                                {{ form_widget(form.photos, {'attr': {'class': 'form-control border-primary'}}) }}
+                            </div>
+                            {{ form_errors(form.photos) }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(form.date, 'Fecha de la Actividad') }}
+                            <div class="input-group">
+                                {{ form_widget(form.date, {'attr': {'class': 'form-control border-primary'}}) }}
+                            </div>
+                            {{ form_errors(form.date) }}
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary">Guardar Actividad</button>
+                            <a href="{{ path('app_home') }}" class="btn btn-outline-secondary">Cancelar</a>
+                        </div>
+                    {{ form_end(form) }}
+                </form>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+
+                        console.log('DOMContentLoaded ejecutado');
+                        console.log(document.scripts);
+
+
+                        var categorySelect = document.getElementById('finished_activity_category');
+                        var subcategorySelect =  document.getElementById('subcategory-select');
+                        var subcategoryContainer = document.getElementById('subcategory-container');
+                        var hiddenActivityId = document.getElementById('finished_activity_activityBBDD');
+
+                        function updateSubcategories(){
+                            const categoryID = categorySelect.value;
+
+                            subcategorySelect.innerHTML = '<option value="">Selecciona una Subcategoria</option>';
+
+                            if (!categoryID) {
+                                subcategoryContainer.style.display = 'none';
+                                return;
+                            }
+
+                            fetch('/finishedActivity/subcategories/' + categoryID)
+                                .then(response => response.json())
+                                .then(subcategories => {
+                                    subcategories.forEach(function(subcategory){
+                                        var option =  new Option(subcategory.name, subcategory.id );
+                                        subcategorySelect.add(option);
+                                    });
+                                subcategoryContainer.style.display = 'block'; // Mostramos el contenedor
+                                })
+                                .catch(error => {
+                                    console.error('Error al cargar subcategorías:', error);
+                                    subcategoryContainer.style.display = 'none'; // Ocultamos el contenedor en caso de error
+                                });
+                        }
+
+                        function updateActivityBBDD(){
+                            const subcategoryID = subcategorySelect.value;
+
+                            if (!subcategoryID) {
+                                hiddenActivityId.value = ''; 
+                                return;
+                            }
+
+                            fetch('/finishedActivity/activity_bbdd/' + subcategoryID)
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.id) {
+                                        hiddenActivityId.value = data.id; 
+                                    } else {
+                                        console.error('No se encontró ActivityBBDD.');
+                                        hiddenActivityId.value = ''; // Si no se encuentra, vacía el campo
+                                    }    
+                                })
+                                .catch(error => {
+                                    console.error('Error al obtener ActivityBBDD:', error);
+                                    hiddenActivityId.value = ''; 
+                                });
+                        }
+
+                        subcategorySelect.addEventListener('change', updateActivityBBDD);
+
+                        categorySelect.addEventListener('change', updateSubcategories);
+
+                        
+                     })
+
+                </script>
+            </div>
         </div>
-        <div id="activityBBDD-container" >
-            {{form_row(form.activityBBDD, {
-                'attr' : {'id': 'activityBBDD-select'}
-            })}}
-        </div>
-        
-        {{ form_row(form.date)}}     
-        
-       
+    </div>
 
-        <button class="btn btn-primary">Guardar Actividad</button>
-        
-    {{ form_end(form) }}
 {% endblock %}
-
-{% block javascripts %}
-{{ parent() }}
-<script>
-    document.addEventListener('DOMContentLoaded', function(){
-        
-        document.getElementById('activity_category').addEventListener('change', function() {
-            let categoryId = this.value;
-            let subcategoryContainer = document.getElementById('subcategory-container');
-            let subcategorySelect = document.getElementById('activity_subcategory');
-            
-            console.log("entro")
-            if (categoryId){
-                console.log(categoryId)
-                let url = `/subcategory/get_subcategory/${categoryId}`;
-                
-                fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    
-                    subcategorySelect.innerHTML = '<option value="">Selecciona una Subcategoria</option>';
-
-                    data.forEach(subcategory => {
-                        subcategorySelect.innerHTML += `<option value="${subcategory.id}">${subcategory.name}</option>`;
-                    });
-                    subcategoryContainer.style.display = 'block';
-                })
-                .catch(error => console.error('Error loading subcategories:', error));
-            } else {
-                subcategoryContainer.style.display = 'none';
-                subcategorySelect.innerHTML = '<option value="">Select a Subcategory</option>';
-            }
-        });
-        document.getElementById('activity_subcategory').addEventListener('change', function() {
-                let subcategoryId = this.value;
-                let activityBBDDContainer = document.getElementById('activityBBDD-container');
-                let activityBBDDSelect = document.getElementById('activity_activityBBDD');
-                console.log("Subcategoría seleccionada:", subcategoryId);
-
-                if (subcategoryId) {
-                    let url = `/activitybbdd/get_activitybbdd/${subcategoryId}`;
-                    console.log("Haciendo solicitud a:", url);
-
-                    fetch(url)
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log("Respuesta de la API:", data); 
-                            activityBBDDSelect.innerHTML = '<option value="">Selecciona una Actividad</option>';
-
-                            data.forEach(activity => {
-                                activityBBDDSelect.innerHTML += `<option value="${activity.id}">${activity.name}</option>`;
-                            });
-                            activityBBDDContainer.style.display = 'block';
-                        })
-                        .catch(error => console.error('Error loading activities:', error));
-                } else {
-                    console.log("No se encontraron actividades para esta subcategoría.");
-                    activityBBDDContainer.style.display = 'none';
-                    activityBBDDSelect.innerHTML = '<option value="">Selecciona una Actividad</option>';
-                }
-            });
-        });
-    </script>
-{% endblock %}
-    

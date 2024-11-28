@@ -26,6 +26,7 @@ class CategoryFixtures extends Fixture
                 // Si no existe, crear una nueva categoría
                 $category = new Category();
                 $category->setNameCat($name);
+                $category->setActive(true);
                 $manager->persist($category);
 
                 // Almacena una referencia para usar en otros fixtures

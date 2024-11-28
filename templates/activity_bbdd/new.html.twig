@@ -1,0 +1,39 @@
+{# templates/activity_bbdd/new.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Crear Nueva Actividad{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <!-- Título de la página -->
+        <h1 class="mb-4 text-center text-primary">Crear Nueva Actividad</h1>
+
+        <!-- Formulario de crear nueva actividad -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title">Formulario de Actividad</h5>
+            </div>
+            <div class="card-body">
+                {{ form_start(form) }}
+                    <div class="mb-3">
+                        {{ form_label(form.name, 'Nombre de la Actividad', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.name) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.subcategory, 'Subcategoría', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.subcategory, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.subcategory) }}
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-success">Crear</button>
+                        <a href="{{ path('app_activity_bbdd_index') }}" class="btn btn-secondary">Volver a la lista</a>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

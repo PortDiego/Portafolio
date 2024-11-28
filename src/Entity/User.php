@@ -21,9 +21,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $name = null;
     #[ORM\Column(length: 255)]
-    private ?string $lastname1 = null;
+    private ?string $firstSurname = null;
     #[ORM\Column(length: 255)]
-    private ?string $lastname2 = null;
+    private ?string $secondSurname = null;
     #[ORM\Column]
     private ?int $phone = null;
 
@@ -41,9 +41,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     /**
-     * @var Collection<int, Activity>
+     * @var Collection<int, FinishedActivity>
      */
-    #[ORM\OneToMany(targetEntity: Activity::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: FinishedActivity::class, mappedBy: 'user')]
     private Collection $Activity;
 
     public function __construct()
@@ -54,27 +54,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->name;
     }
-    public function setName(string $name): self
+    public function setName(string $name): static
     {
         $this->name = $name;
         return $this;
     }
-    public function getLastName1(): ?string
+    public function getFirstSurname(): ?string
     {
-        return $this->lastname1;
+        return $this->firstSurname;
     }
-    public function setLastName1(string $lastname1): static
+    public function setFirstSurname(string $firstSurname): static
     {
-        $this->lastname1 = $lastname1;
+        $this->firstSurname = $firstSurname;
         return $this;
     }
-    public function getLastName2(): ?string
+    public function getSecondSurname(): ?string
     {
-        return $this->lastname2;
+        return $this->secondSurname;
     }
-    public function setLastName2(string $lastname2): static
+    public function setSecondSurname(string $secondSurname): static
     {
-        $this->lastname2 = $lastname2;
+        $this->secondSurname = $secondSurname;
         return $this;
     }
     public function getPhone(): ?string
@@ -149,16 +149,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+    
 
+    /* Relacion con FinishedActivity */
     /**
-     * @return Collection<int, Activity>
+     * @return Collection<int, FinishedActivity>
      */
-    public function getActivity(): Collection
+    public function getFinishedActivity(): Collection
     {
         return $this->Activity;
     }
 
-    public function addActivity(Activity $activity): static
+    public function addFinishedActivity(FinishedActivity $activity): static
     {
         if (!$this->Activity->contains($activity)) {
             $this->Activity->add($activity);
@@ -168,7 +170,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeActivity(Activity $activity): static
+    public function removeFinishedActivity(FinishedActivity $activity): static
     {
         if ($this->Activity->removeElement($activity)) {
             // set the owning side to null (unless already changed)

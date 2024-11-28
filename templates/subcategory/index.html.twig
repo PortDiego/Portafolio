@@ -26,7 +26,7 @@
         <tbody>
             {% for subcategory in subcategories %}
                 <tr>
-                    <td>{{ subcategory.nameSub }}</td>
+                    <td>{{ subcategory.name }}</td>
                     <td>{{ subcategory.category.nameCat }}</td>
                     <td>
                         <a href="{{ path('app_subcategory_show', {id: subcategory.id}) }}">View</a> |
@@ -46,3 +46,4 @@
     </table>
 </div>
 {% endblock %}
+

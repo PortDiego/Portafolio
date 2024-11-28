@@ -10,13 +10,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/category')]
-final class CategoryController extends AbstractController
-{
+final class CategoryController extends AbstractController{
+
     #[Route(name: 'app_category_index', methods: ['GET'])]
     public function index(CategoryRepository $categoryRepository): Response
     {
@@ -28,7 +28,7 @@ final class CategoryController extends AbstractController
     #[Route('/new', name: 'app_category_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $this->createCategories($entityManager);
+        
 
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
@@ -76,7 +76,7 @@ final class CategoryController extends AbstractController
     #[Route('/{id}', name: 'app_category_delete', methods: ['POST'])]
     public function delete(Request $request, Category $category, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($category);
             $entityManager->flush();
         }
@@ -85,24 +85,25 @@ final class CategoryController extends AbstractController
     }
 
     #[Route('/get_subcategory', name: 'get_subcategory', methods: ['GET'])]
-    public function getSubcategory(Request $request, LoggerInterface $logger, EntityManagerInterface $entityManager): JsonResponse
+    public function getSubcategory(Request $request, LoggerInterface $logger): JsonResponse
     {
+        // Obtener el id de categoría
         $categoryId = $request->query->get('category_id');
         $logger->info('Requesting subcategories for category ID: ' . $categoryId);
 
         if ($categoryId) {
-            $category = $entityManager->getRepository(Category::class)->find($categoryId);
+            $category = $this->getDoctrine()->getRepository(Category::class)->find($categoryId);
             $logger->info('Category Search Result', ['category' => $category]);
 
             if ($category) {
-                $subcategories = $category->getSubcategory();
+                $subcategories = $category->getSubcategory(); 
                 $logger->info('Subcategories found', ['subcategories' => $subcategories]);
 
                 $data = [];
                 foreach ($subcategories as $subcategory) {
                     $data[] = [
                         'id' => $subcategory->getId(),
-                        'name' => $subcategory->getNameSub(),
+                        'name' => $subcategory->getName(),
                     ];
                 }
 
@@ -116,25 +117,5 @@ final class CategoryController extends AbstractController
         }
 
         return new JsonResponse([], 400);
-    }
-
-    private function createCategories(EntityManagerInterface $entityManager): void
-    {
-        // Ejemplo de categorías por defecto
-        $categories = ['Montana', 'Agua', 'Nieve'];
-
-        foreach ($categories as $categoryName) {
-            // Verificar si la categoría ya existe
-            $existingCategory = $entityManager->getRepository(Category::class)
-                ->findOneBy(['name' => $categoryName]);
-
-            if (!$existingCategory) {
-                $category = new Category();
-                $category->setNameCat($categoryName);
-                $entityManager->persist($category);
-            }
-        }
-
-        $entityManager->flush();
     }
 }

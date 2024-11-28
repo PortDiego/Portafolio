@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Activity index{% endblock %}
+
+{% block body %}
+    <h1>Recorded activities</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Id</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for finishedActivity in finishedActivities  %}
+            <tr>
+                <td>{{ finishedActivity.id }}</td>
+                <td>{{ finishedActivity.date ? finishedActivity.date|date('d-m-Y') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_activity_show', {'id': finishedActivity.id}) }}">show</a>
+                    <a href="{{ path('app_activity_edit', {'id': finishedActivity.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between">
+        <a href="{{ path('app_home') }}" class="btn btn-outline-secondary">Volver</a>
+    </div>
+
+{% endblock %}
