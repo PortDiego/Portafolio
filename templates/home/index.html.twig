@@ -5,10 +5,15 @@
 {% block body %}
 <div class="container py-5">
     <div class="example-wrapper bg-light p-4 rounded shadow-sm">   <!-- Fondo claro y bordes redondeados -->
-        <h1 class="text-dark">Hello {{ controller_name }}! ✅</h1>
-        <a href="{{ path('app_logout') }}" class="btn btn-secondary">Logout</a>
-        <br>
-        <a href="{{ path('app_activity_new') }}" class="btn btn-primary">Add new Activity</a>
+        <h1 class="text-dark">Hello! ✅</h1>
+        <div class="mb-3">
+            <a href="{{ path('app_login') }}" class="btn btn-primary">Iniciar Sesión</a>
+        </div>
+
+        <div>
+            <a href="{{ path('app_activity_new') }}" class="btn btn-primary">Añadir nueva Actividad</a>
+        </div>
+        
     </div>
 </div>
 {% endblock %}
