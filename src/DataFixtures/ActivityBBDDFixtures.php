@@ -332,7 +332,7 @@ class ActivityBBDDFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies()
     {
         return [
-            SubcategoryFixture::class,
+            SubcategoryFixtures::class,
             ProvincesFixtures::class,
         ];
     }
