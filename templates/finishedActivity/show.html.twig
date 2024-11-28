@@ -9,18 +9,18 @@
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ finishedActivity.id }}</td>
+                <td>{{ finishedActivities.id }}</td>
             </tr>
             <tr>
                 <th>Date</th>
-                <td>{{ finishedActivity.date ? activity.date|date('Y-m-d') : '' }}</td>
+                <td>{{ finishedActivities.date ? finishedActivities.date|date('Y-m-d') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
     <a href="{{ path('app_activity_index') }}">back to list</a>
 
-    <a href="{{ path('app_activity_edit', {'id': activity.id}) }}">edit</a>
+    <a href="{{ path('app_activity_edit', {'id': finishedActivities.id}) }}">edit</a>
 
     {{ include('finishedActivity/_delete_form.html.twig') }}
 {% endblock %}

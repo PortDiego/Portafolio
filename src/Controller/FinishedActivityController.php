@@ -23,7 +23,7 @@ final class FinishedActivityController extends AbstractController{
     public function index(FinishedActivityRepository $finishedActivityRepository): Response
     {
         return $this->render('finishedActivity/index.html.twig', [
-            'activities' => $finishedActivityRepository->findAll(),
+            'finishedActivities' => $finishedActivityRepository->findAll(),
         ]);
     }
 
@@ -84,7 +84,7 @@ final class FinishedActivityController extends AbstractController{
         }
 
         return $this->render('home/add_activity.html.twig', [
-            'activity' => $finishedActivity,
+            'finishedActivities' => $finishedActivity,
             'form' => $form->createView(),
         ]);
     }
@@ -93,7 +93,7 @@ final class FinishedActivityController extends AbstractController{
     public function show(FinishedActivity $finishedActivity): Response
     {
         return $this->render('finishedActivity/show.html.twig', [
-            'activity' => $finishedActivity,
+            'finishedActivities' => $finishedActivity,
         ]);
     }
 
@@ -110,7 +110,7 @@ final class FinishedActivityController extends AbstractController{
         }
 
         return $this->render('finishedActivity/edit.html.twig', [
-            'activity' => $finishedActivity,
+            'finishedActivities' => $finishedActivity,
             'form' => $form,
         ]);
     }
@@ -136,7 +136,7 @@ final class FinishedActivityController extends AbstractController{
         foreach($subcategories as $subcategory){
             $data[] = [
                 'id' => $subcategory->getId(),
-                'name' => $subcategory->getNameSub(),
+                'name' => $subcategory->getName(),
             ];
         }
         

@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/category')]
 final class CategoryController extends AbstractController{
@@ -27,7 +28,7 @@ final class CategoryController extends AbstractController{
     #[Route('/new', name: 'app_category_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $this->createCategories($entityManager);
+        
 
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
@@ -102,7 +103,7 @@ final class CategoryController extends AbstractController{
                 foreach ($subcategories as $subcategory) {
                     $data[] = [
                         'id' => $subcategory->getId(),
-                        'name' => $subcategory->getNameSub(),
+                        'name' => $subcategory->getName(),
                     ];
                 }
 

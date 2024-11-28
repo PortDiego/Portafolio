@@ -21,7 +21,7 @@ class ActivityBBDDType extends AbstractType
 
         ->add('subcategory', EntityType::class, [
             'class' => Subcategory::class, 
-            'choice_label' => 'name_sub',
+            'choice_label' => 'name',
             'placeholder' => 'Selecciona una subcategoría',
         ]);
     }

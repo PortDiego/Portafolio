@@ -14,13 +14,13 @@
             </tr>
         </thead>
         <tbody>
-        {% for activity in activities %}
+        {% for finishedActivity in finishedActivities  %}
             <tr>
-                <td>{{ activity.id }}</td>
-                <td>{{ activity.date ? activity.date|date('d-m-Y') : '' }}</td>
+                <td>{{ finishedActivity.id }}</td>
+                <td>{{ finishedActivity.date ? finishedActivity.date|date('d-m-Y') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_activity_show', {'id': activity.id}) }}">show</a>
-                    <a href="{{ path('app_activity_edit', {'id': activity.id}) }}">edit</a>
+                    <a href="{{ path('app_activity_show', {'id': finishedActivity.id}) }}">show</a>
+                    <a href="{{ path('app_activity_edit', {'id': finishedActivity.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

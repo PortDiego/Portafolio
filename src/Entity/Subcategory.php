@@ -29,7 +29,7 @@ class Subcategory
 
     public function __construct()
     {
-        $this->activities = new ArrayCollection();
+        $this->activitiesBBDD = new ArrayCollection();
     }
 
     public function getId(): ?int
