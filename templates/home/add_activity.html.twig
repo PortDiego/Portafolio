@@ -1,134 +1,127 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Añadir nueva Actividad{% endblock %}
+{% block title %}Añadir Nueva Actividad{% endblock %}
 
-{% block body %}
-    <div class="container mt-5">
-        <div class="card shadow-sm border-primary">
-            <div class="card-body">
-                <h1 class="mb-4 text-primary">Añadir nueva Actividad</h1>
+{% block content %}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Añadir Nueva Actividad</h1>
 
-                <form method="post" enctype="multipart/form-data">
-                    {{ form_start(form) }}
-                        <div class="mb-3">
-                            {{ form_label(form.name_activity, 'Nombre de la Actividad') }}
-                            <div class="input-group">
-                                {{ form_widget(form.name_activity, {'attr': {'class': 'form-control border-primary'}}) }}
-                            </div>
-                            {{ form_errors(form.name_activity) }}
-                        </div>
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {{ form_start(form) }}
 
-                        <div class="mb-3">
-                            {{ form_label(form.category, 'Categoría') }}
-                            <div class="input-group">
-                                {{ form_widget(form.category, {'attr': {'class': 'form-control border-primary'}}) }}
-                            </div>
-                            {{ form_errors(form.category) }}
-                        </div>
+                <div class="mb-3">
+                    {{ form_label(form.name_activity, 'Nombre de la Actividad') }}
+                    <div class="input-group">
+                        {{ form_widget(form.name_activity, {'attr': {'class': 'form-control form-control-lg border-primary'}}) }}
+                    </div>
+                    {{ form_errors(form.name_activity) }}
+                </div>
 
-                        {{ form_row(form.catalog, { 'attr': {'type': 'hidden', 'id': 'hiddenActivityId' }}) }}
+                <div class="mb-3">
+                    {{ form_label(form.category, 'Categoría') }}
+                    <div class="input-group">
+                        {{ form_widget(form.category, {'attr': {'class': 'form-control form-control-lg border-primary'}}) }}
+                    </div>
+                    {{ form_errors(form.category) }}
+                </div>
 
-                        <div id="subcategory-container" class="mb-3" style="display: none;">
-                            <label for="subcategory-select" class="form-label">Subcategoria</label>
-                            <select id="subcategory-select" class="form-control border-primary">
-                                <option value="">Selecciona una Subcategoria</option>
-                            </select>
-                        </div>
+                {{ form_row(form.catalog, { 'attr': {'type': 'hidden', 'id': 'hiddenActivityId' }}) }}
 
-                        <div class="mb-3">
-                            {{ form_label(form.photos, 'Foto') }}
-                            <div class="input-group">
-                                {{ form_widget(form.photos, {'attr': {'class': 'form-control border-primary'}}) }}
-                            </div>
-                            {{ form_errors(form.photos) }}
-                        </div>
+                <div id="subcategory-container" class="mb-3" style="display: none;">
+                    <label for="subcategory-select" class="form-label">Subcategoría</label>
+                    <select id="subcategory-select" class="form-control form-control-lg border-primary">
+                        <option value="">Selecciona una Subcategoría</option>
+                    </select>
+                </div>
 
-                        <div class="mb-3">
-                            {{ form_label(form.date, 'Fecha de la Actividad') }}
-                            <div class="input-group">
-                                {{ form_widget(form.date, {'attr': {'class': 'form-control border-primary'}}) }}
-                            </div>
-                            {{ form_errors(form.date) }}
-                        </div>
+                <div class="mb-3">
+                    {{ form_label(form.photos, 'Foto') }}
+                    <div class="input-group">
+                        {{ form_widget(form.photos, {'attr': {'class': 'form-control form-control-lg border-primary'}}) }}
+                    </div>
+                    {{ form_errors(form.photos) }}
+                </div>
 
-                        <div class="d-flex justify-content-between">
-                            <button type="submit" class="btn btn-primary">Guardar Actividad</button>
-                            <a href="{{ path('app_home') }}" class="btn btn-outline-secondary">Cancelar</a>
-                        </div>
-                    {{ form_end(form) }}
-                </form>
+                <div class="mb-3">
+                    {{ form_label(form.date, 'Fecha de la Actividad') }}
+                    <div class="input-group">
+                        {{ form_widget(form.date, {'attr': {'class': 'form-control form-control-lg border-primary'}}) }}
+                    </div>
+                    {{ form_errors(form.date) }}
+                </div>
 
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary btn-lg">Guardar Actividad</button>
+                    <a href="{{ path('app_home') }}" class="btn btn-outline-secondary btn-lg">Cancelar</a>
+                </div>
 
-                        console.log('DOMContentLoaded ejecutado');
-                        console.log(document.scripts);
-
-
-                        var categorySelect = document.getElementById('finished_activity_category');
-                        var subcategorySelect =  document.getElementById('subcategory-select');
-                        var subcategoryContainer = document.getElementById('subcategory-container');
-                        var hiddenActivityId = document.getElementById('finished_activity_catalog');
-
-                        function updateSubcategories(){
-                            const categoryID = categorySelect.value;
-
-                            subcategorySelect.innerHTML = '<option value="">Selecciona una Subcategoria</option>';
-
-                            if (!categoryID) {
-                                subcategoryContainer.style.display = 'none';
-                                return;
-                            }
-
-                            fetch('/finishedActivity/subcategories/' + categoryID)
-                                .then(response => response.json())
-                                .then(subcategories => {
-                                    subcategories.forEach(function(subcategory){
-                                        var option =  new Option(subcategory.name, subcategory.id );
-                                        subcategorySelect.add(option);
-                                    });
-                                subcategoryContainer.style.display = 'block'; // Mostramos el contenedor
-                                })
-                                .catch(error => {
-                                    console.error('Error al cargar subcategorías:', error);
-                                    subcategoryContainer.style.display = 'none'; // Ocultamos el contenedor en caso de error
-                                });
-                        }
-
-                        function updateCatalog(){
-                            const subcategoryID = subcategorySelect.value;
-
-                            if (!subcategoryID) {
-                                hiddenActivityId.value = ''; 
-                                return;
-                            }
-
-                            fetch('/finishedActivity/activity_bbdd/' + subcategoryID)
-                                .then(response => response.json())
-                                .then(data => {
-                                    if (data.id) {
-                                        hiddenActivityId.value = data.id; 
-                                    } else {
-                                        console.error('No se encontró Catalog.');
-                                        hiddenActivityId.value = ''; // Si no se encuentra, vacía el campo
-                                    }    
-                                })
-                                .catch(error => {
-                                    console.error('Error al obtener Catalog:', error);
-                                    hiddenActivityId.value = ''; 
-                                });
-                        }
-
-                        subcategorySelect.addEventListener('change', updateCatalog);
-
-                        categorySelect.addEventListener('change', updateSubcategories);
-
-                        
-                     })
-
-                </script>
-            </div>
+                {{ form_end(form) }}
+            </form>
         </div>
     </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var categorySelect = document.getElementById('finished_activity_category');
+        var subcategorySelect = document.getElementById('subcategory-select');
+        var subcategoryContainer = document.getElementById('subcategory-container');
+        var hiddenActivityId = document.getElementById('finished_activity_catalog');
+
+        function updateSubcategories() {
+            const categoryID = categorySelect.value;
+
+            subcategorySelect.innerHTML = '<option value="">Selecciona una Subcategoría</option>';
+
+            if (!categoryID) {
+                subcategoryContainer.style.display = 'none';
+                return;
+            }
+
+            fetch('/finishedActivity/subcategories/' + categoryID)
+                .then(response => response.json())
+                .then(subcategories => {
+                    subcategories.forEach(function(subcategory) {
+                        var option = new Option(subcategory.name, subcategory.id);
+                        subcategorySelect.add(option);
+                    });
+                    subcategoryContainer.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error al cargar subcategorías:', error);
+                    subcategoryContainer.style.display = 'none';
+                });
+        }
+
+        function updateCatalog() {
+            const subcategoryID = subcategorySelect.value;
+
+            if (!subcategoryID) {
+                hiddenActivityId.value = '';
+                return;
+            }
+
+            fetch('/finishedActivity/activity_bbdd/' + subcategoryID)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.id) {
+                        hiddenActivityId.value = data.id;
+                    } else {
+                        console.error('No se encontró Catalog.');
+                        hiddenActivityId.value = '';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al obtener Catalog:', error);
+                    hiddenActivityId.value = '';
+                });
+        }
+
+        subcategorySelect.addEventListener('change', updateCatalog);
+        categorySelect.addEventListener('change', updateSubcategories);
+    });
+</script>
 
 {% endblock %}

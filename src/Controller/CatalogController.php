@@ -18,7 +18,7 @@ class CatalogController extends AbstractController
     {
         $activitiesBBDD = $repository->findAll();
 
-        return $this->render('activity_bbdd/index.html.twig', [
+        return $this->render('catalog/index.html.twig', [
             'activitiesBBDD' => $activitiesBBDD,
         ]);
     }
@@ -38,7 +38,7 @@ class CatalogController extends AbstractController
             return $this->redirectToRoute('app_activity_bbdd_index');
         }
 
-        return $this->render('activity_bbdd/new.html.twig', [
+        return $this->render('catalog/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -56,7 +56,7 @@ class CatalogController extends AbstractController
             return $this->redirectToRoute('app_activity_bbdd_index');
         }
 
-        return $this->render('activity_bbdd/edit.html.twig', [
+        return $this->render('catalog/edit.html.twig', [
             'form' => $form->createView(),
             'activity' => $finishedActivity,
         ]);
