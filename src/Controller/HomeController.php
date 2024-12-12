@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\FinishedActivity;
 use App\Entity\User;
+use App\Entity\Photo;
 use App\Form\FinishedActivityType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,6 +26,10 @@ class HomeController extends AbstractController
         $usuariosRegistradosCount = $entityManager->getRepository(User::class)
             ->count([]);
 
+        // Obtener el número de fotos subidas
+        $fotosSubidasCount = $entityManager->getRepository(Photo::class) // Cambia 'Photo' al nombre de tu entidad para fotos
+        ->count([]);
+
         // Obtener el número de actividades finalizadas por mes
         $actividadesPorMes = $this->getActivitiesByMonth($entityManager);
         
@@ -32,6 +37,7 @@ class HomeController extends AbstractController
             'actividades_finalizadas_count' => $actividadesFinalizadasCount,
             'usuarios_registrados_count' => $usuariosRegistradosCount,
             'actividades_por_mes' => $actividadesPorMes,
+            'fotos_subidas_count' => $fotosSubidasCount,
         ]);
     } 
     #[Route('/home/add-activity', name: 'add_activity')]

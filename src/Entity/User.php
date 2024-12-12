@@ -46,6 +46,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: FinishedActivity::class, mappedBy: 'user')]
     private Collection $Activity;
 
+    #[ORM\OneToOne(targetEntity: Profile::class, mappedBy: "user")]
+    private ?Profile $profile = null;
+
     public function __construct()
     {
         $this->Activity = new ArrayCollection();

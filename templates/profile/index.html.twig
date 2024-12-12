@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Perfil{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="header">
+        <div class="container-fluid">
+            <div class="header-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h1 class="header-title">Perfil</h1>
+                        <p class="header-subtitle">Detalles del perfil</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Panel izquierdo (información del usuario) -->
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <img src="https://via.placeholder.com/150?text=Foto" alt="Foto" class="img-fluid rounded-circle mb-3" style="width: 150px;">
+                    <h5 class="card-title">{{ app.user.name }}</h5>
+
+                    <!-- Botones de Seguir y Mensaje -->
+                    <div class="d-flex justify-content-center mt-3">
+                        <!-- Botón Seguir -->
+                        <a class="btn btn-primary btn-lg me-2">
+                            Seguir
+                        </a>
+                        <!-- Botón Mensaje con ícono -->
+                        <a class="btn btn-primary btn-lg" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg> Mensaje
+                        </a>
+                    </div>
+
+                    <hr> <!-- Línea separadora -->
+                    <h6 class="card-title text-start">Acerca de mí</h6>
+                    <p class="text-muted">Ubicación: </p>
+
+                    <hr>
+                    <h6 class="card-title text-start">Redes Sociales</h6>
+                    <p class="text-muted">Redes: </p>
+
+                    <hr>
+                    <h6 class="card-title text-start">Estadísticas</h6>
+                    <p>Actividades: <strong>{{ finishedActivities|length }}</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel derecho (actividades del usuario) -->
+        <div class="col-lg-9">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Mis Actividades</h5>
+                </div>
+                <div class="card-body">
+                    {% for activity in finishedActivities %}
+                        <div class='border-bottom pb-3 mb-3'>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="d-flex align-items-center">
+                                    <strong class="ms-2">{{ activity.user.name }}</strong>
+                                    <span class="ms-2">ha creado una nueva actividad</span>
+                                </div>
+                                
+                                <div class="ms-3">
+                                    <small>{{ activity.getDate()|date('d M Y') }}</small>
+                                </div>
+                            </div>
+
+                            <div class="activity-info">
+                                <h5 class="mb-1">{{ activity.getNameActivity }}</h5>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p>No has publicado ninguna actividad aún.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
