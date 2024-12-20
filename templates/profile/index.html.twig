@@ -9,7 +9,7 @@
             <div class="header-body">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h1 class="header-title">Perfil</h1>
+                        <h2 class="header-title">Perfil</h2>
                         <p class="header-subtitle">Detalles del perfil</p>
                     </div>
                 </div>
@@ -22,8 +22,18 @@
         <div class="col-lg-3">
             <div class="card">
                 <div class="card-body text-center">
-                    <img src="https://via.placeholder.com/150?text=Foto" alt="Foto" class="img-fluid rounded-circle mb-3" style="width: 150px;">
-                    <h5 class="card-title">{{ app.user.name }}</h5>
+                    {% if app.user.profile.photo %}
+                            <img src="{{ path('profile_show_photo', { id: app.user.profile.id }) }}" 
+                                alt="Foto de perfil" 
+                                class="img-fluid rounded-circle mb-3" 
+                                style="width: 150px;">
+                        {% else %}
+                            <img src="https://via.placeholder.com/150?text=Foto" 
+                                alt="Foto" 
+                                class="img-fluid rounded-circle mb-3" 
+                                style="width: 150px;">
+                        {% endif %}
+                    <h5 class="card-title">{{ app.user.profile.username }}</h5>
 
                     <!-- Botones de Seguir y Mensaje -->
                     <div class="d-flex justify-content-center mt-3">
@@ -40,16 +50,35 @@
                     </div>
 
                     <hr> <!-- Línea separadora -->
+                    
                     <h6 class="card-title text-start">Acerca de mí</h6>
-                    <p class="text-muted">Ubicación: </p>
+                    {% if app.user.profile.City %}
+                        <p class="text-muted text-start">
+                            <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                            Vive en <span class="fw-semibold">{{ app.user.profile.City }}</span>
+                        </p>
+                    {% else %}
+                        <p class="text-muted text-start">
+                            <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                            Vive en <span class="fw-semibold">No especificado</span>
+                        </p>
+                    {% endif %}
 
-                    <hr>
-                    <h6 class="card-title text-start">Redes Sociales</h6>
-                    <p class="text-muted">Redes: </p>
+                    {% if app.user.profile.Country %}
+                        <p class="text-muted text-start">
+                            <i class="fas fa-globe me-2 text-success"></i>
+                            Es de <span class="fw-semibold">{{ app.user.profile.Country }}</span>
+                        </p>
+                    {% else %}
+                        <p class="text-muted text-start">
+                            <i class="fas fa-globe me-2 text-success"></i>
+                            Es de <span class="fw-semibold">No especificado</span>
+                        </p>
+                    {% endif %}
 
                     <hr>
                     <h6 class="card-title text-start">Estadísticas</h6>
-                    <p>Actividades: <strong>{{ finishedActivities|length }}</strong></p>
+                    <p class="text-muted text-start">Actividades: <strong>{{ finishedActivities|length }}</strong></p>
                 </div>
             </div>
         </div>
