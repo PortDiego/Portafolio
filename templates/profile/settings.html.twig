@@ -1,0 +1,274 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajustes y Privacidad{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Encabezado de la página -->
+    <div class="header">
+        <div class="container-fluid">
+            <div class="header-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h2 class="header-title">Ajustes y Privacidad</h2>
+                        <p class="header-subtitle">Configura tu cuenta y preferencias</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <form method="post" action="{{ path('app_settings') }}" enctype="multipart/form-data">
+    {{ form_start(form) }}
+    <!-- Contenedor principal para los ajustes -->
+    <div class="row">
+        <!-- Panel izquierdo para navegación de opciones -->
+        <div class="col-lg-2">
+            <div class="card">
+                <div class="list-group list-group-flush">
+                    <!-- Usamos 'data-bs-toggle="tab"' para hacer los cambios dinámicos -->
+                    <a href="#profileTab" class="list-group-item list-group-item-action active" data-bs-toggle="tab">
+                        <i class="bi bi-person"></i> Perfil
+                    </a>
+                    <a href="#passwordTab" class="list-group-item list-group-item-action" data-bs-toggle="tab">
+                        <i class="bi bi-shield-lock"></i> Contraseña
+                    </a>
+                    <a href="#privacyTab" class="list-group-item list-group-item-action" data-bs-toggle="tab">
+                        <i class="bi bi-shield-lock"></i> Privacidad
+                    </a>
+                    <a href="#notificationsTab" class="list-group-item list-group-item-action" data-bs-toggle="tab">
+                        <i class="bi bi-bell"></i> Notificaciones
+                    </a>
+                    <a href="#settingsTab" class="list-group-item list-group-item-action" data-bs-toggle="tab">
+                        <i class="bi bi-gear"></i> Configuración
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel derecho para contenido de configuración -->
+        <div class="col-lg-10">
+            <div class="tab-content">
+                <!-- Perfil Tab -->
+                <div class="tab-pane fade show active" id="profileTab">
+                    <!-- Configuración de la Cuenta -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Configuración de la Cuenta</h5>
+                        </div>
+
+                        <div class="card-body">
+                            <!-- Formulario de Ajustes de Perfil -->
+                            <div class="row">
+                                <!-- Columna para nombre de usuario y biografía -->
+                                <div class="col-md-8">
+                                    <!-- Campo de nombre de usuario -->
+                                    <div class="mb-3">
+                                        <label class="form-label" for="inputUsername">Nombre de Usuario</label>
+                                        {{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder': 'Tu nombre de usuario'}}) }}
+                                    </div>
+
+                                    <!-- Campo de biografía -->
+                                    <div class="mb-3">
+                                        <label class="form-label" for="inputBio">Biografía</label>
+                                        {{ form_widget(form.biography, {'attr': {'class': 'form-control', 'placeholder': 'Cuéntanos algo sobre ti'}}) }}
+                                    </div>
+                                </div>
+
+                                <!-- Columna para imagen de perfil -->
+                                <div class="col-md-4 d-flex justify-content-center align-items-center">
+                                    <div class="text-center">
+                                        {% if profile.photo %}
+                                            <img src="{{ path('profile_show_photo', { id: profile.id }) }}" 
+                                                    alt="Foto de perfil" 
+                                                    class="img-fluid rounded-circle mb-3" 
+                                                    style="width: 150px;">
+                                        {% else %}
+                                            <img src="https://via.placeholder.com/150?text=Foto" 
+                                                    alt="Foto" 
+                                                    class="img-fluid rounded-circle mb-3" 
+                                                    style="width: 150px;">
+                                        {% endif %}
+
+                                        <div class="mt-2">
+                                            <label for="profile_photo" class="btn btn-primary">
+                                                <i class="fas fa-upload"></i> Subir Imagen
+                                            </label>
+                                            {{ form_widget(form.photo, {'attr': {'id': 'profile_photo', 'style': 'display:none;'}}) }}
+
+                                            {% if form.photo.vars.errors|length > 0 %}
+                                                <div class="alert alert-danger mt-2">
+                                                    {% for error in form.photo.vars.errors %}
+                                                        <p>{{ error.message }}</p>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <small class="text-muted d-block mt-2">Para mejores resultados, utiliza una imagen de al menos 150px por 150px en formato .jpg</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Botón para guardar cambios -->
+                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                        </div>
+                    </div>
+
+                    <!-- Información Privada -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Información Privada</h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- Formulario para configuración privada -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="inputName">Nombre</label>
+                                        <input type="text" id="inputName" name="name" class="form-control" placeholder="Tu nombre" value="{{ app.user.name }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="inputFirstSurname">Primer Apellido</label>
+                                        <input type="text" id="inputFirstSurname" name="firstSurname" class="form-control" placeholder="Tu apellido" value="{{ app.user.firstSurname }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="inputEmail">Correo Electrónico</label>
+                                <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Tu correo" value="{{ app.user.email }}">
+                            </div>
+
+                            <!-- Campo para la dirección -->
+                            <div class="mb-3">
+                                <label class="form-label" for="inputAddress">Dirección</label>
+                                {{ form_widget(form.address, {'attr': {'class': 'form-control', 'placeholder': 'Dirección'}}) }}
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="inputCity">Ciudad</label>
+                                        {{ form_widget(form.country, {'attr': {'class': 'form-control', 'placeholder': 'País'}}) }}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="inputCountry">País</label>
+                                        {{ form_widget(form.city, {'attr': {'class': 'form-control', 'placeholder': 'Ciudad'}}) }}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="inputCP">Código Postal</label>
+                                        {{ form_widget(form.postalCode, {'attr': {'class': 'form-control', 'placeholder': 'Código Postal'}}) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                        </div>
+                    </div>
+                </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}  
+
+                <!-- Contraseña Tab -->
+                <div class="tab-pane fade" id="passwordTab">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Configuración de la Contraseña</h5>
+                        </div>
+                        <div class="card-body pt-0">
+                            {{ form_start(passwordForm, {'action': path('app_settings'), 'method': 'POST'}) }}
+                            <!-- Campos del formulario de contraseña -->
+                            <div class="mb-3">
+                                <label class="form-label" for="currentPassword">Contraseña Actual</label>
+                                {{ form_widget(passwordForm.currentPassword, {'attr': {'class': 'form-control', 'placeholder': 'Introduce tu contraseña actual'}}) }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="newPassword">Nueva Contraseña</label>
+                                {{ form_widget(passwordForm.newPassword, {'attr': {'class': 'form-control', 'placeholder': 'Introduce tu nueva contraseña'}}) }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="confirmPassword">Confirmar Contraseña</label>
+                                {{ form_widget(passwordForm.confirmPassword, {'attr': {'class': 'form-control', 'placeholder': 'Confirma tu nueva contraseña'}}) }}
+                            </div>
+                            <!-- Botón para actualizar contraseña -->
+                            <button type="submit" class="btn btn-primary" id="submit-password-form">Actualizar Contraseña</button>
+                            {{ form_end(passwordForm) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('profile_photo').addEventListener('change', function(event) {
+        var file = event.target.files[0];
+        var validTypes = ['image/jpeg', 'image/png'];
+        var maxSize = 9000;
+
+        // Validar tipo de archivo
+        if (file && !validTypes.includes(file.type)) {
+            alert("Solo se permiten imágenes en formato JPG o PNG.");
+            event.target.value = ''; // Limpia el input
+            return;
+        }
+
+        // Validar tamaño de archivo
+        if (file && file.size > maxSize) {
+            alert("La imagen es demasiado grande. El tamaño máximo permitido es de 5MB.");
+            event.target.value = ''; // Limpia el input
+            return;
+        }
+
+
+        if (file) {
+            img.src = URL.createObjectURL(file);
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const passwordForm = document.querySelector("form[name='password_change']");
+        const submitButton = document.getElementById('submit-password-form');
+
+        // Función para validar las contraseñas
+        function validatePasswords(event) {
+            // Obtener los valores de los campos de contraseña
+            const currentPassword = document.getElementById('password_change_currentPassword').value;
+            const newPassword = document.getElementById('password_change_newPassword').value;
+            const confirmPassword = document.getElementById('password_change_confirmPassword').value;
+
+            // Validar que la contraseña actual no esté vacía
+            if (currentPassword.trim() === "") {
+                alert("Por favor, ingrese su contraseña actual.");
+                event.preventDefault(); // Evita el envío del formulario
+                return;
+            }
+
+            // Validar que la nueva contraseña no esté vacía
+            if (newPassword.trim() === "") {
+                alert("Por favor, ingrese una nueva contraseña.");
+                event.preventDefault();
+                return;
+            }
+
+            // Validar que las contraseñas nuevas coincidan
+            if (newPassword !== confirmPassword) {
+                alert("Las contraseñas nuevas no coinciden.");
+                event.preventDefault();
+                return;
+            }
+
+            // Si todo es válido, el formulario se enviará
+        }
+
+        // Añadir el listener al botón de envío
+        passwordForm.addEventListener("submit", validatePasswords);
+    });
+</script>
+{% endblock %}

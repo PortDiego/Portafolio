@@ -46,6 +46,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: FinishedActivity::class, mappedBy: 'user')]
     private Collection $Activity;
 
+    #[ORM\OneToOne(targetEntity: Profile::class, mappedBy: "user")]
+    private ?Profile $profile = null;
+
     public function __construct()
     {
         $this->Activity = new ArrayCollection();
@@ -178,6 +181,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $activity->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProfile(): ?Profile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?Profile $profile): static
+    {
+        // Para asegurar la bidireccionalidad de la relación
+        if ($profile !== null && $profile->getUser() !== $this) {
+            $profile->setUser($this);
+        }
+
+        $this->profile = $profile;
 
         return $this;
     }

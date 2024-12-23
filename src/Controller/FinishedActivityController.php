@@ -46,15 +46,12 @@ final class FinishedActivityController extends AbstractController{
                 $this->addFlash('error', 'No se encontró la actividad BBDD.');
             }
         }
-        /* var_dump($form->isSubmitted());
-        var_dump($form->isValid()); */
-       /*  die(); */
+
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
             $finishedActivity->setUser($user);
 
             $file = $form->get('photos')->getData();
-            /* dd($form->getData()); */
 
             if($file)
             {
