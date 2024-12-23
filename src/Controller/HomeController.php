@@ -34,7 +34,7 @@ class HomeController extends AbstractController
             ->count([]);
 
         // Obtener el número de fotos subidas
-        $fotosSubidasCount = $entityManager->getRepository(Photo::class) // Cambia 'Photo' al nombre de tu entidad para fotos
+        $fotosSubidasCount = $entityManager->getRepository(Photo::class)
         ->count([]);
 
         // Obtener el número de actividades finalizadas por mes
@@ -47,11 +47,6 @@ class HomeController extends AbstractController
             'fotos_subidas_count' => $fotosSubidasCount,
         ]);
     } 
-    #[Route('/home/add-activity', name: 'add_activity')]
-    public function addActivity(Request $request, EntityManagerInterface $entityManager): Response
-    {
-       /*  return $this->redirectToRoute('app_activity_new'); */
-    }
 
     private function getActivitiesByMonth(EntityManagerInterface $entityManager): array
     {
@@ -71,11 +66,10 @@ class HomeController extends AbstractController
         foreach ($result as $row) {
             // Verificar si 'date' existe y es un objeto DateTime
             if (isset($row['date']) && $row['date'] instanceof \DateTimeInterface) {
-                $month = (int) $row['date']->format('m'); // Extraer el mes (1-12)
-                $activitiesByMonth[$month - 1]++; // Incrementar el contador para ese mes
+                $month = (int) $row['date']->format('m');
+                $activitiesByMonth[$month - 1]++;
             } else {
-                // Manejo de casos donde 'date' no es válido
-                dump($row); // Ayuda para depurar en caso de valores inesperados
+                dump($row);
             }
         }
 

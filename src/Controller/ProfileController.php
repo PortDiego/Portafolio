@@ -14,9 +14,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProfileController extends AbstractController
 {
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     #[Route('/profile', name: 'app_profile')]
     public function index(EntityManagerInterface $entityManager): Response
     {
@@ -35,12 +41,6 @@ class ProfileController extends AbstractController
 
     private $passwordHasher;
 
-    // Constructor para inyectar el servicio password_hasher
-    public function __construct(UserPasswordHasherInterface $passwordHasher)
-    {
-        $this->passwordHasher = $passwordHasher;
-    }
-
     #[Route('/profile/settings', name: 'app_settings')]
     public function settings(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -58,7 +58,7 @@ class ProfileController extends AbstractController
 
             // Gestión de la foto subida
             $file = $form->get('photo')->getData();
-            if ($file instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+            if ($file instanceof UploadedFile) {
                 $binaryData = file_get_contents($file->getPathname());
                 if (is_resource($binaryData)) {
                     $binaryData = stream_get_contents($binaryData);
@@ -92,7 +92,6 @@ class ProfileController extends AbstractController
                     if ($newPassword !== $confirmPassword) {
                         $this->addFlash('error', 'Las contraseñas nuevas no coinciden.');
                     } else {
-                        // Actualizar la contraseña
                         $newPasswordHash = $this->passwordHasher->hashPassword($user, $newPassword);
                         $user->setPassword($newPasswordHash);
                         $entityManager->flush();
