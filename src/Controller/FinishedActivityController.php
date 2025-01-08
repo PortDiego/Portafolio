@@ -152,5 +152,10 @@ final class FinishedActivityController extends AbstractController{
                 'name' => $catalog->getName(),
             ]);
         }
+
+        return $this->json([
+            'id' => null, 
+            'name' => 'No disponible', 
+        ]);
     }
 }

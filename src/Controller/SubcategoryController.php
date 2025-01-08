@@ -18,9 +18,6 @@ final class SubcategoryController extends AbstractController
     #[Route(name: 'app_subcategory_index', methods: ['GET'])]
     public function index(SubcategoryRepository $subcategoryRepository, EntityManagerInterface $entityManager): Response
     {
-        // Inicializa las subcategorías predefinidas
-        $this->initializePredefinedSubcategories($entityManager);
-
         return $this->render('subcategory/index.html.twig', [
             'subcategories' => $subcategoryRepository->findAll(),
         ]);
@@ -46,6 +43,21 @@ final class SubcategoryController extends AbstractController
             'subcategory' => $subcategory,
             'form' => $form,
         ]);
+    }
+
+    #[Route('/all', name: 'app_subcategory_all', methods: ['GET'])]
+    public function getAllSubcategories(SubcategoryRepository $subcategoryRepository): Response
+    {
+        $subcategories = $subcategoryRepository->findAll();
+
+        $data = array_map(function (Subcategory $subcategory) {
+            return [
+                'id' => $subcategory->getId(),
+                'name' => $subcategory->getName(),
+            ];
+        }, $subcategories);
+
+        return $this->json($data);
     }
 
     #[Route('/{id}', name: 'app_subcategory_show', methods: ['GET'])]
@@ -83,6 +95,24 @@ final class SubcategoryController extends AbstractController
         }
 
         return $this->redirectToRoute('app_subcategory_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/category', name: 'get_category_by_subcategory', methods: ['GET'])]
+    public function getCategoryBySubcategory($id, SubcategoryRepository $subcategoryRepository): Response
+    {
+        $subcategory = $subcategoryRepository->find($id);
+
+        if (!$subcategory) {
+            return $this->json(['error' => 'Subcategoría no encontrada'], 404);
+        }
+
+        $category = $subcategory->getCategory();
+
+        if (!$category) {
+            return $this->json(['error' => 'Categoría no encontrada'], 404);
+        }
+
+        return $this->json(['categoryId' => $category->getId()]);
     }
 
 }
