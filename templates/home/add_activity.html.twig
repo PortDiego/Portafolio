@@ -11,6 +11,13 @@
             <form method="post" enctype="multipart/form-data">
                 {{ form_start(form) }}
 
+                <div class="mb-3 position-relative">
+                    <label for="subcategory-search" class="form-label">Buscar Subcategoría</label>
+                    <input type="text" id="subcategory-search" class="form-control form-control-lg border-primary" placeholder="Escribe para buscar...">
+                    <ul id="subcategory-dropdown" class="list-group position-absolute w-100" style="z-index: 1000; display: none; max-height: 200px; overflow-y: auto;">
+                    </ul>
+                </div>
+
                 <div class="mb-3">
                     {{ form_label(form.name_activity, 'Nombre de la Actividad') }}
                     <div class="input-group">
@@ -64,16 +71,38 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         var categorySelect = document.getElementById('finished_activity_category');
         var subcategorySelect = document.getElementById('subcategory-select');
         var subcategoryContainer = document.getElementById('subcategory-container');
+        var subcategorySearch = document.getElementById('subcategory-search');
+        var subcategoryDropdown = document.getElementById('subcategory-dropdown');
         var hiddenActivityId = document.getElementById('finished_activity_catalog');
+
+        let allSubcategories = [];
+
+        function loadAllSubcategories() {
+            fetch('/subcategory/all')
+                .then(response => response.json())
+                .then(subcategories => {
+                    allSubcategories = subcategories;
+                    subcategories.forEach(function (subcategory) {
+                        var option = new Option(subcategory.name, subcategory.id);
+                        subcategorySelect.add(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al cargar todas las subcategorías:', error);
+                });
+        }
 
         function updateSubcategories() {
             const categoryID = categorySelect.value;
+            const selectedSubcategoryID = subcategorySelect.value;
 
             subcategorySelect.innerHTML = '<option value="">Selecciona una Subcategoría</option>';
+            subcategorySearch.value = '';
+            subcategoryDropdown.style.display = 'none';
 
             if (!categoryID) {
                 subcategoryContainer.style.display = 'none';
@@ -83,16 +112,45 @@
             fetch('/finishedActivity/subcategories/' + categoryID)
                 .then(response => response.json())
                 .then(subcategories => {
-                    subcategories.forEach(function(subcategory) {
-                        var option = new Option(subcategory.name, subcategory.id);
+                    let subcategoryExists = false;
+
+                    subcategories.forEach(function (subcategory) {
+                        const option = new Option(subcategory.name, subcategory.id);
                         subcategorySelect.add(option);
+
+                        if (subcategory.id == selectedSubcategoryID) {
+                            subcategorySelect.value = selectedSubcategoryID;
+                            subcategoryExists = true;
+                        }
                     });
+
+                    if (!subcategoryExists) {
+                        subcategorySelect.value = '';
+                    }
+
                     subcategoryContainer.style.display = 'block';
+                    updateCatalog();
                 })
                 .catch(error => {
                     console.error('Error al cargar subcategorías:', error);
                     subcategoryContainer.style.display = 'none';
                 });
+        }
+
+        async function updateCategory(subcategoryID) {
+            try {
+                const response = await fetch('/subcategory/' + subcategoryID + '/category');
+                const data = await response.json();
+                if (data.categoryId) {
+                    categorySelect.value = data.categoryId;
+                } else {
+                    console.error('No se encontró la categoría relacionada.');
+                    categorySelect.value = '';
+                }
+            } catch (error) {
+                console.error('Error al obtener la categoría relacionada:', error);
+                categorySelect.value = '';
+            }
         }
 
         function updateCatalog() {
@@ -109,8 +167,8 @@
                     if (data.id) {
                         hiddenActivityId.value = data.id;
                     } else {
-                        console.error('No se encontró Catalog.');
                         hiddenActivityId.value = '';
+                        alert('Esta subcategoría no está disponible por el momento.');
                     }
                 })
                 .catch(error => {
@@ -119,8 +177,49 @@
                 });
         }
 
-        subcategorySelect.addEventListener('change', updateCatalog);
+        function filterSubcategories() {
+            const searchQuery = subcategorySearch.value.toLowerCase();
+
+            subcategoryDropdown.innerHTML = '';
+            if (!searchQuery) {
+                subcategoryDropdown.style.display = 'none';
+                return;
+            }
+
+            const filteredSubcategories = allSubcategories.filter(subcategory =>
+                subcategory.name.toLowerCase().includes(searchQuery)
+            );
+
+            if (filteredSubcategories.length > 0) {
+                subcategoryDropdown.style.display = 'block';
+                filteredSubcategories.forEach(function (subcategory) {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item list-group-item-action';
+                    listItem.textContent = subcategory.name;
+                    listItem.dataset.id = subcategory.id;
+
+                    listItem.addEventListener('click', async function () {
+                        subcategorySearch.value = subcategory.name;
+                        subcategorySelect.value = subcategory.id;
+                        subcategoryDropdown.style.display = 'none';
+                        subcategoryContainer.style.display = 'block';
+
+                        await updateCategory(subcategory.id);
+                        updateSubcategories(subcategory.id);
+                        updateCatalog();
+                    });
+
+                    subcategoryDropdown.appendChild(listItem);
+                });
+            } else {
+                subcategoryDropdown.style.display = 'none';
+            }
+        }
+
+        subcategorySearch.addEventListener('input', filterSubcategories);
         categorySelect.addEventListener('change', updateSubcategories);
+        loadAllSubcategories();
+        
     });
 </script>
 
