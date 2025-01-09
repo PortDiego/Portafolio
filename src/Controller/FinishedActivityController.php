@@ -22,8 +22,11 @@ final class FinishedActivityController extends AbstractController{
     #[Route(name: 'app_activity_index', methods: ['GET'])]
     public function index(FinishedActivityRepository $finishedActivityRepository): Response
     {
+        $user = $this->getUser();
+        $finishedActivities = $finishedActivityRepository->findBy(['user' => $user]);
+
         return $this->render('finishedActivity/index.html.twig', [
-            'finishedActivities' => $finishedActivityRepository->findAll(),
+            'finishedActivities' => $finishedActivities,
         ]);
     }
 
@@ -101,6 +104,8 @@ final class FinishedActivityController extends AbstractController{
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $finishedActivity->setNameActivity($form->get('name_activity')->getData());
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_activity_index', [], Response::HTTP_SEE_OTHER);
@@ -108,7 +113,7 @@ final class FinishedActivityController extends AbstractController{
 
         return $this->render('finishedActivity/edit.html.twig', [
             'finishedActivities' => $finishedActivity,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
