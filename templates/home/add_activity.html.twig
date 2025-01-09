@@ -34,7 +34,7 @@
                     {{ form_errors(form.category) }}
                 </div>
 
-                {{ form_row(form.catalog, { 'attr': {'type': 'hidden', 'id': 'hiddenActivityId' }}) }}
+                {{ form_row(form.catalog, { 'attr': {'type': 'hidden', 'id': 'finished_activity_catalog' }}) }}
 
                 <div id="subcategory-container" class="mb-3" style="display: none;">
                     <label for="subcategory-select" class="form-label">Subcategoría</label>
@@ -101,7 +101,6 @@
             const selectedSubcategoryID = subcategorySelect.value;
 
             subcategorySelect.innerHTML = '<option value="">Selecciona una Subcategoría</option>';
-            subcategorySearch.value = '';
             subcategoryDropdown.style.display = 'none';
 
             if (!categoryID) {
@@ -217,6 +216,11 @@
         }
 
         subcategorySearch.addEventListener('input', filterSubcategories);
+        subcategorySelect.addEventListener('change', function () {
+            const subcategoryID = subcategorySelect.value;
+            hiddenActivityId.value = subcategoryID;
+            updateCatalog(); 
+        });
         categorySelect.addEventListener('change', updateSubcategories);
         loadAllSubcategories();
         
