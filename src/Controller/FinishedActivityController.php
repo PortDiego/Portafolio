@@ -146,7 +146,7 @@ final class FinishedActivityController extends AbstractController{
     public function delete(Request $request, FinishedActivity $finishedActivity, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$finishedActivity->getId(), $request->getPayload()->getString('_token'))) {
-            $finishedActivity->markAsDeleted();
+            $finishedActivity->setDeleted(true);
             $entityManager->flush();
         }
 

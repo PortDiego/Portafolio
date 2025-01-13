@@ -6,6 +6,7 @@ use App\Repository\FinishedActivityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use \DateTimeImmutable;
 
 #[ORM\Entity(repositoryClass: FinishedActivityRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -162,15 +163,14 @@ class FinishedActivity
     /* Relacion con persistencia de los datos en la BBDD */
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
-    public function updateTimestamps(): void
+    public function setUpdatedAt(): void
     {
-        $this->updatedAt = new \DateTime();
+        $this->updatedAt = new DateTimeImmutable();
     }
 
-    public function markAsDeleted(): void
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
-        $this->setDeleted(true);
-        $this->updatedAt = new \DateTime();
+        return $this->updatedAt;
     }
 
     public function setDeleted(bool $deleted): static
@@ -182,17 +182,6 @@ class FinishedActivity
     public function isDeleted(): bool
     {
         return $this->deleted;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
     }
 
 }
