@@ -8,6 +8,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FinishedActivityRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class FinishedActivity
 {
     #[ORM\Id]
@@ -24,8 +25,8 @@ class FinishedActivity
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photoPath = null;
 
-    #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
-    private ?\DateTimeInterface $createdAt = null;
+    #[ORM\Column(type: "datetime_immutable")]
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'Activity')]
     #[ORM\JoinColumn(nullable: false)]
@@ -51,7 +52,7 @@ class FinishedActivity
         return $this->name_activity;
     }
 
-    public function setNameActivity(string $name_activity): static
+    public function setNameActivity(?string $name_activity): static
     {
         $this->name_activity = $name_activity;
 
@@ -131,31 +132,24 @@ class FinishedActivity
         return $this->photoPath;
     }
 
-    public function setPhotoPath(string $photoPath): static
+    public function setPhotoPath(?string $photoPath): static
     {
         $this->photoPath = $photoPath;
 
         return $this;
     }
 
+    #[ORM\PrePersist]
+    public function setCreatedAt(): void
+    {
+        if ($this->createdAt === null) {
+            $this->createdAt = new \DateTimeImmutable();
+        }
+    }
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-        return $this;
-    }
-
-    public function setCreatedAtIfNull(): static
-    {
-        if ($this->createdAt === null) {
-            $this->createdAt = new \DateTime();
-        }
-
-        return $this;
     }
 
 }
