@@ -28,6 +28,12 @@ class FinishedActivity
     #[ORM\Column(type: "datetime_immutable")]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\Column(type: "boolean")]
+    private bool $deleted = false; 
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
+
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'Activity')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
@@ -139,6 +145,7 @@ class FinishedActivity
         return $this;
     }
 
+    /* Relacion con la fecha a la que se realiza la actividad */
     #[ORM\PrePersist]
     public function setCreatedAt(): void
     {
@@ -150,6 +157,42 @@ class FinishedActivity
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
+    }
+
+    /* Relacion con persistencia de los datos en la BBDD */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function updateTimestamps(): void
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
+    public function markAsDeleted(): void
+    {
+        $this->setDeleted(true);
+        $this->updatedAt = new \DateTime();
+    }
+
+    public function setDeleted(bool $deleted): static
+    {
+        $this->deleted = $deleted;
+        return $this;
+    }
+
+    public function isDeleted(): bool
+    {
+        return $this->deleted;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
     }
 
 }

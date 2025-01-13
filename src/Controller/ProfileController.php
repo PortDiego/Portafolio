@@ -28,7 +28,10 @@ class ProfileController extends AbstractController
     {
         $user = $this->getUser();
 
-        $finishedActivities = $entityManager->getRepository(FinishedActivity::class)->findBy(['user' => $user]);
+        $finishedActivities = $entityManager->getRepository(FinishedActivity::class)->findBy([
+            'user' => $user,
+            'deleted' => false,
+        ]);
 
         $userName = $user->getName();
 

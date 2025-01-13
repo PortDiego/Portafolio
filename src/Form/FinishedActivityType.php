@@ -15,8 +15,9 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Doctrine\ORM\EntityRepository;
 
 class FinishedActivityType extends AbstractType
 {
@@ -59,6 +60,18 @@ class FinishedActivityType extends AbstractType
                 'required' => true,
                 'label' => false, 
                 'attr' => ['style' => 'display:none;'] 
+            ])
+
+            ->add('delete_photo', CheckboxType::class, [
+                'label'    => '¿Borrar Foto?',
+                'required' => false,
+                'mapped'   => false, 
+            ])
+
+            ->add('user_photo', HiddenType::class, [
+                'mapped' => false,
+                'data' => $options['data']->getPhotoPath(), 
+                'required' => false,
             ]);
 
             $formModifier = function(FormInterface $form, Category $category = null){

@@ -23,7 +23,10 @@ final class FinishedActivityController extends AbstractController{
     public function index(FinishedActivityRepository $finishedActivityRepository): Response
     {
         $user = $this->getUser();
-        $finishedActivities = $finishedActivityRepository->findBy(['user' => $user]);
+        $finishedActivities = $finishedActivityRepository->findBy([
+            'user' => $user,
+            'deleted' => false,
+        ]);
 
         return $this->render('finishedActivity/index.html.twig', [
             'finishedActivities' => $finishedActivities,
@@ -53,8 +56,6 @@ final class FinishedActivityController extends AbstractController{
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
             $finishedActivity->setUser($user);
-
-            $finishedActivity->setCreatedAt();
 
             $file = $form->get('photos')->getData();
 
@@ -106,7 +107,30 @@ final class FinishedActivityController extends AbstractController{
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $finishedActivity->setNameActivity($form->get('name_activity')->getData());
+
+            $catalog = $form->get('catalog')->getData();
+            if ($catalog) {
+                $finishedActivity->setCatalog($catalog);
+            }
+
+            if ($form->get('delete_photo')->getData() === true) {
+                if ($finishedActivity->getPhotoPath()) {
+                    $photoPath = $this->getParameter('activity_images_path') . '/' . $finishedActivity->getPhotoPath();
+                    if (file_exists($photoPath)) {
+                        unlink($photoPath);
+                    }
+                    $finishedActivity->setPhotoPath(null);
+                }
+            }
+
+            $file = $form->get('photos')->getData();
+            if ($file) {
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+
+                $file->move($this->getParameter('activity_images_path'), $fileName);
+
+                $finishedActivity->setPhotoPath($fileName);
+            }
 
             $entityManager->flush();
 
@@ -114,7 +138,6 @@ final class FinishedActivityController extends AbstractController{
         }
 
         return $this->render('finishedActivity/edit.html.twig', [
-            'finishedActivities' => $finishedActivity,
             'form' => $form->createView(),
         ]);
     }
@@ -123,7 +146,7 @@ final class FinishedActivityController extends AbstractController{
     public function delete(Request $request, FinishedActivity $finishedActivity, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$finishedActivity->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($finishedActivity);
+            $finishedActivity->markAsDeleted();
             $entityManager->flush();
         }
 
