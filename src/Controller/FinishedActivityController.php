@@ -54,6 +54,8 @@ final class FinishedActivityController extends AbstractController{
             $user = $this->getUser();
             $finishedActivity->setUser($user);
 
+            $finishedActivity->setCreatedAt();
+
             $file = $form->get('photos')->getData();
 
             if($file)

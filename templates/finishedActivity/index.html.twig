@@ -16,6 +16,7 @@
                         <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Fecha de Finalización</th>
+                            <th scope="col">Foto</th>
                             <th scope="col" class="text-center">Acciones</th>
                         </tr>
                     </thead>
@@ -24,6 +25,13 @@
                             <tr>
                                 <td>{{ finishedActivity.nameActivity }}</td>
                                 <td>{{ finishedActivity.date|date('d/m/Y') }}</td>
+                                <td>
+                                    {% if finishedActivity.photoPath %}
+                                        <img src="{{ asset('activity_images/' ~ finishedActivity.photoPath) }}" alt="Foto de {{ finishedActivity.nameActivity }}" class="img-thumbnail" style="max-width: 150px; height: auto;">
+                                    {% else %}
+                                        <span class="text-muted">No hay foto</span>
+                                    {% endif %}
+                                </td>
                                 <td class="text-center">
                                     <a href="{{ path('app_activity_edit', {'id': finishedActivity.id}) }}" class="btn btn-warning btn-sm">
                                         <i class="bi bi-pencil-square"></i> Editar
