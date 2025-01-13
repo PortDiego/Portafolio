@@ -24,6 +24,9 @@ class FinishedActivity
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photoPath = null;
 
+    #[ORM\Column(type: "datetime", options: ["default" => "CURRENT_TIMESTAMP"])]
+    private ?\DateTimeInterface $createdAt = null;
+
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'Activity')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
@@ -131,6 +134,26 @@ class FinishedActivity
     public function setPhotoPath(string $photoPath): static
     {
         $this->photoPath = $photoPath;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    public function setCreatedAtIfNull(): static
+    {
+        if ($this->createdAt === null) {
+            $this->createdAt = new \DateTime();
+        }
 
         return $this;
     }

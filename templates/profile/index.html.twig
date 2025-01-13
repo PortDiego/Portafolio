@@ -91,20 +91,29 @@
                 </div>
                 <div class="card-body">
                     {% for activity in finishedActivities %}
-                        <div class='border-bottom pb-3 mb-3'>
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <div class="d-flex align-items-center">
-                                    <strong class="ms-2">{{ activity.user.name }}</strong>
-                                    <span class="ms-2">ha creado una nueva actividad</span>
+                        <div class="border-bottom pb-4 mb-4">
+                            <div class="d-flex justify-content-between">
+                                <div class="flex-grow-1 me-4">
+                                    <h5 class="mb-2">{{ activity.getNameActivity }}</h5>
+                                    <p class="mb-2">
+                                        <strong>Categoría:</strong> {{ activity.getCatalog().getSubCategory().getCategory().getNameCat() }}<br>
+                                        <strong>Subcategoría:</strong> {{ activity.getCatalog().getSubCategory().getName() }}<br>
+                                        <strong>Fecha:</strong> {{ activity.getDate()|date('d/m/Y') }}<br>
+                                    </p>
                                 </div>
-                                
-                                <div class="ms-3">
-                                    <small>{{ activity.getDate()|date('d M Y') }}</small>
+                                <div style="margin-right: 15rem;">
+                                    {% if activity.photoPath %}
+                                        <img src="{{ asset('activity_images/' ~ activity.photoPath) }}" 
+                                            alt="Foto de {{ activity.nameActivity }}" 
+                                            class="img-thumbnail" 
+                                            style="width: 300px; height: auto; object-fit: contain;">
+                                    {% else %}
+                                        
+                                    {% endif %}
                                 </div>
                             </div>
-
-                            <div class="activity-info">
-                                <h5 class="mb-1">{{ activity.getNameActivity }}</h5>
+                            <div class="text-end mt-2">
+                                <small class="text-muted">Creado el: {{ activity.createdAt|date('d/m/Y') }}</small>
                             </div>
                         </div>
                     {% else %}
