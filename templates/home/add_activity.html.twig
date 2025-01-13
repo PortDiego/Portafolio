@@ -11,6 +11,8 @@
             <form method="post" enctype="multipart/form-data">
                 {{ form_start(form) }}
 
+                {{ form_widget(form.delete_photo, {'attr': {'style': 'display: none;'}}) }}
+
                 <div class="mb-3 position-relative">
                     <label for="subcategory-search" class="form-label">Buscar Subcategoría</label>
                     <input type="text" id="subcategory-search" class="form-control form-control-lg border-primary" placeholder="Escribe para buscar...">

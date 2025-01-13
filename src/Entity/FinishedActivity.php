@@ -6,6 +6,7 @@ use App\Repository\FinishedActivityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use \DateTimeImmutable;
 
 #[ORM\Entity(repositoryClass: FinishedActivityRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -27,6 +28,12 @@ class FinishedActivity
 
     #[ORM\Column(type: "datetime_immutable")]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: "boolean")]
+    private bool $deleted = false; 
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'Activity')]
     #[ORM\JoinColumn(nullable: false)]
@@ -139,6 +146,7 @@ class FinishedActivity
         return $this;
     }
 
+    /* Relacion con la fecha a la que se realiza la actividad */
     #[ORM\PrePersist]
     public function setCreatedAt(): void
     {
@@ -150,6 +158,30 @@ class FinishedActivity
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
+    }
+
+    /* Relacion con persistencia de los datos en la BBDD */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setUpdatedAt(): void
+    {
+        $this->updatedAt = new DateTimeImmutable();
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setDeleted(bool $deleted): static
+    {
+        $this->deleted = $deleted;
+        return $this;
+    }
+
+    public function isDeleted(): bool
+    {
+        return $this->deleted;
     }
 
 }

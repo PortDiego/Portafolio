@@ -3,36 +3,105 @@
 {% block title %}Editar Actividad{% endblock %}
 
 {% block content %}
-<div class="container-fluid px-4">
-    <h1 class="mt-4">Editar Actividad</h1>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Editar Actividad</h1>
 
-    <div class="card mb-4">
-        <div class="card-body">
-            <form method="post">
-                {{ form_start(form) }}
+        <div class="card mb-4">
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {{ form_start(form) }}
 
-                <div class="mb-3">
-                    {{ form_label(form.name_activity, 'Nombre de la Actividad') }}
-                    <div class="input-group">
+                    <div class="mb-3">
+                        {{ form_label(form.name_activity, 'Nombre de la Actividad') }}
                         {{ form_widget(form.name_activity) }}
+                        {{ form_errors(form.name_activity) }}
                     </div>
-                    {{ form_errors(form.name_activity) }}
-                </div>
 
-                {{ form_widget(form.category, {'attr': {'style': 'display: none;'}}) }}
-                {{ form_widget(form.photos, {'attr': {'style': 'display: none;'}}) }}
-                {{ form_widget(form.date, {'attr': {'style': 'display: none;'}}) }}
+                    <div class="mb-3">
+                        {{ form_label(form.category, 'Categoría') }}
+                        <div class="input-group">
+                            {{ form_widget(form.category, {'attr': {'class': 'form-control form-control-lg border-primary'}}) }}
+                        </div>
+                        {{ form_errors(form.category) }}
+                    </div>
 
-                {{ form_row(form.catalog, { 'attr': {'type': 'hidden', 'id': 'finished_activity_catalog' }}) }}
+                    {{ form_row(form.catalog, { 'attr': {'type': 'hidden', 'id': 'finished_activity_catalog' }}) }}
 
-                <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary btn-lg">Guardar Cambios</button>
-                    <a href="{{ path('app_activity_index') }}" class="btn btn-outline-secondary btn-lg">Cancelar</a>
-                </div>
+                    <div id="subcategory-container" class="mb-3" style="display: none;">
+                        <label for="subcategory-select" class="form-label">Subcategoría</label>
+                        <select id="subcategory-select" class="form-control form-control-lg border-primary">
+                            <option value="">Selecciona una Subcategoría</option>
+                        </select>
+                    </div>
 
-                {{ form_end(form) }}
-            </form>
+                    {% if form.user_photo.vars.value is not empty %}
+                        <div class="mb-3">
+                            <label>Foto Actual</label>
+                            <img src="{{ asset('activity_images/' ~ form.user_photo.vars.value) }}" alt="Foto actual" class="img-thumbnail" style="max-width: 150px;">
+                        </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        {{ form_label(form.delete_photo, 'Eliminar Foto') }}
+                        {{ form_widget(form.delete_photo) }}
+                        {{ form_errors(form.delete_photo) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.photos, 'Nueva Foto') }}
+                        {{ form_widget(form.photos) }}
+                        {{ form_errors(form.photos) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.date, 'Fecha de la Actividad') }}
+                        {{ form_widget(form.date) }}
+                        {{ form_errors(form.date) }}
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary btn-lg">Guardar Cambios</button>
+                        <a href="{{ path('app_activity_index') }}" class="btn btn-outline-secondary btn-lg">Cancelar</a>
+                    </div>
+
+                    {{ form_end(form) }}
+                </form>
+            </div>
         </div>
     </div>
-</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const categorySelect = document.getElementById('{{ form.category.vars.id }}');
+            const subcategoryContainer = document.getElementById('subcategory-container');
+            const subcategorySelect = document.getElementById('subcategory-select');
+
+            categorySelect.addEventListener('change', function() {
+                const selectedCategory = this.value;
+
+                if (!selectedCategory) {
+                    subcategoryContainer.style.display = 'none';
+                    return;
+                }
+
+                subcategoryContainer.style.display = 'block';
+
+                fetch(`/finishedActivity/subcategories/${selectedCategory}`)
+                    .then(response => response.json())
+                    .then(subcategories => {
+                        subcategorySelect.innerHTML = '<option value="">Selecciona una Subcategoría</option>';
+
+                        subcategories.forEach(subcategory => {
+                            const option = document.createElement('option');
+                            option.value = subcategory.id;
+                            option.textContent = subcategory.name;
+                            subcategorySelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error al cargar las subcategorías:', error);
+                    });
+            });
+        });
+    </script>
 {% endblock %}
