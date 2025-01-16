@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXT LEVEL</title>
+    <link rel="stylesheet" href="CSS/Style.css">
+    <script src="JS/Script.js"></script>
+
+    <!-- Fuentes -->
+
+    <!-- Chakra Petch -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600&display=swap" rel="stylesheet">
+
+    <!-- Cinzel Decorative -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap" rel="stylesheet">
+
+    <!-- Iconos de FontAwesome -->
+    <script src="https://kit.fontawesome.com/da9f1d8239.js" crossorigin="anonymous"></script>
+
+    <!-- Precarga de imagenes -->
+    <link rel="preload" as="image" href="Media/HeroImage.jpg">
+    <link rel="preload" as="image" href="Media/HeroImage2.jpg">
+    <link rel="preload" as="image" href="Media/HeroImage3.jpg">
+
+    <!-- AOS animation library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+</head>
+<body>
+    <!-- Aqui empieza el modal de bienvenida -->
+    <div id="modalBienvenida">
+        <div id="modalBox">
+            <h1>Bienvenido a NEXT LEVEL</h1>
+            <button id="botonCerrarMBL" onclick="cerrarMBB()">Empieza</button>
+        </div>
+    </div>
+
+    <header id="encabezado">
+        <!-- Esta parte es de los fondo del Encabezado -->
+        <div class="fondosHero" id="fondoHero1"></div>
+        <div class="fondosHero" id="fondoHero2"></div>
+        <div class="fondosHero" id="fondoHero3"></div>
+
+        
+        <!-- Aqui empieza el menú de las opciones-->
+        <nav id="navBar" >
+            <a href="Index.html">
+                <!-- <div id="logo" ></div> -->
+                <img src="Media/Logo.png" alt="" id="logo">
+            </a>
+
+            <ul id="opciones">
+                <li class="elementoOpciones"><a href="#encabezado">Inicio</a></li>
+
+                <li class="elementoOpciones">
+                    <a href="#genero">Género</a>
+                    <ul id="subGenero">
+                        <li class="elementoGenero"><a href="#genero" >Acción</a></li>
+                        <li class="elementoGenero"><a href="#genero" onclick="marcarCategoria('categoriaLucha', 'tabLucha')">Lucha</a></li>
+                        <li class="elementoGenero"><a href="#genero" onclick="marcarCategoria('categoriaRPG', 'tabRPG')">Rol/RPG</a></li>
+                        <li class="elementoGenero"><a href="#genero">Arcade</a></li>
+                        <li class="elementoGenero"><a href="#genero">Soulslike</a></li>
+                    </ul>
+                </li>
+                
+                <li class="elementoOpciones"><a href="#galeria">Galería</a></li>
+                
+                <li class="elementoOpciones">
+                    <a href="#proximosLanzamientos">Próximos Lanzamientos</a>
+                    <ul id="subLanz">
+                        <li class="elementoLanz"><a href="#proximosLanzamientos">PS5</a></li>
+                        <li class="elementoLanz"><a href="#proximosLanzamientos">Switch</a></li>
+                        <li class="elementoLanz"><a href="#proximosLanzamientos">XBOX</a></li>
+                        <li class="elementoLanz"><a href="#proximosLanzamientos">PC</a></li>
+                    </ul>
+                </li>
+                
+                <li class="elementoOpciones"><a href="#filosofia">Filosofía</a></li>
+                
+                <li class="elementoOpciones"><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+
+        <h1 id="tituloCabecera">NEXT LEVEL</h1>
+
+        <h2 id="subTituloCabecera">¡ENCUENTRA TU PRÓXIMA AVENTURA!</h2>
+    </header>
+
+    <!-- Esta en la parte del Género -->
+    <section id="genero">
+        <h2 class="tituloSeccion tituloGenero" data-aos="zoom-in-down">Género</h2>
+
+        <div id="contenedorEtiquetasGenero" data-aos="zoom-out-up">
+            <p id="tabAccion" class="etiquetaGenero" onclick="marcarCategoria('categoriaAccion', 'tabAccion')">Acción</p>
+            <p id="tabLucha" class="etiquetaGenero" onclick="marcarCategoria('categoriaLucha', 'tabLucha')" >Lucha</p>
+            <p id="tabRPG" class="etiquetaGenero pestanaActiva" onclick="marcarCategoria('categoriaRPG', 'tabRPG')">Rol/RPG</p>
+            <p id="tabArcade" class="etiquetaGenero" onclick="marcarCategoria('categoriaArcade', 'tabArcade')">Arcade</p>
+            <p id="tabSoulslike" class="etiquetaGenero" onclick="marcarCategoria('categoriaSoulslike', 'tabSoulslike')">Soulslike</p>
+        </div>
+
+        <div class="contenedorCategoria" id="categoriaRPG">
+            <div class="juego">
+                <div class="imagenJuego" data-aos="zoom-out-up">
+                    <img src="Media/rpg1.png" alt="Juego de Rol">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego" data-aos="zoom-out-up">
+                    <img src="Media/rpg2.png" alt="Juego de Rol">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego" data-aos="zoom-out-up">
+                    <img src="Media/rpg3.png" alt="Juego de Rol">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego" data-aos="zoom-out-up">
+                    <img src="Media/rpg4.png" alt="Juego de Rol">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego" data-aos="zoom-out-up">
+                    <img src="Media/rpg5.png" alt="Juego de Rol">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego" data-aos="zoom-out-up">
+                    <img src="Media/rpg6.png" alt="Juego de Rol">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+        </div>
+
+        <div class="contenedorCategoria" id="categoriaLucha">
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/lucha1.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/lucha2.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/lucha3.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/lucha4.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/lucha5.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/lucha6.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+        </div>
+
+        <div class="contenedorCategoria" id="categoriaAccion">
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Accion1.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Accion2.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Accion3.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Accion4.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Accion5.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Accion6.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+        </div>
+
+        <div class="contenedorCategoria" id="categoriaArcade">
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Arcade1.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Arcade2.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Arcade3.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Arcade4.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Arcade5.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Arcade6.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+        </div>
+
+        <div class="contenedorCategoria" id="categoriaSoulslike">
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Souls1.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Souls2.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Souls3.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Souls4.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Souls5.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+
+            <div class="juego">
+                <div class="imagenJuego">
+                    <img src="Media/Souls6.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+                <p class="precioJuego">Precio</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Esta en la parte de la Galeria -->
+    <section id="galeria">
+        <h2 class="tituloSeccion tituloGaleria" data-aos="zoom-in-down">Galería</h2>
+
+        <div id="contenedorGaleria">
+            <div class="imagenGaleria">
+                <img  class="imgGal" src="Media/galeria1.png" alt="" data-aos="flip-up" data-aos-duration="1000">
+            </div>
+            <div class="imagenGaleria">
+                <img class="imgGal" src="Media/galeria2.png" alt="" data-aos="flip-up" data-aos-duration="1000">
+            </div>
+            <div class="imagenGaleria">
+                <img class="imgGal" src="Media/galeria3.png" alt="" data-aos="flip-up" data-aos-duration="1000">
+            </div>
+            <div class="imagenGaleria">
+                <img class="imgGal" src="Media/galeria4.png" alt="" data-aos="flip-up" data-aos-duration="1000">
+            </div>
+            <div class="imagenGaleria">
+                <img class="imgGal" src="Media/galeria5.png" alt="" data-aos="flip-up" data-aos-duration="1250">
+            </div>
+            <div class="imagenGaleria">
+                <img class="imgGal" src="Media/galeria6.png" alt="" data-aos="flip-up" data-aos-duration="1250">
+            </div>
+            <div class="imagenGaleria">
+                <img class="imgGal" src="Media/galeria7.png" alt="" data-aos="flip-up" data-aos-duration="1250">
+            </div>
+            <div class="imagenGaleria">
+                <img class="imgGal" src="Media/galeria8.png" alt="" data-aos="flip-up" data-aos-duration="1250">
+            </div>
+            <div class="imagenGaleria">
+                <img class="imgGal" src="Media/galeria9.png" alt="" data-aos="flip-up" data-aos-duration="1500">
+            </div>
+            <div class="imagenGaleria">
+                <img class="imgGal" src="Media/galeria10.png" alt="" data-aos="flip-up" data-aos-duration="1500">
+            </div>
+            <div class="imagenGaleria">
+                <img class="imgGal" src="Media/galeria11.png" alt="" data-aos="flip-up" data-aos-duration="1500">
+            </div>
+            <div class="imagenGaleria">
+                <img class="imgGal" src="Media/galeria12.png" alt="" data-aos="flip-up" data-aos-duration="1500">
+            </div>
+        </div>
+
+        <div id="modalLightBoxG">
+            <div id="imageToShow">
+                
+            </div>
+            <button class="lbButtons lbbRight" onclick="nextImgGal()" >
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <button class="lbButtons lbbLeft" onclick="prevImgGal()">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Esta en la parte de Próximos Lanzamientos -->
+    <section id="proximosLanzamientos">
+        <h2 class="tituloSeccion tituloLanzamientos" data-aos="zoom-in-down">Próximos Lanzamientos</h2>
+
+        <div id="contenedorEtiquetasLanzamientos">
+            <p class="etiquetaLanzamiento ps5">PS5</p>
+            <p class="etiquetaLanzamiento switch">Switch</p>
+            <p class="etiquetaLanzamiento xbox">XBOX</p>
+            <p class="etiquetaLanzamiento pc">PC</p>
+        </div>
+
+        <div id="contenedorLanzamiento">
+            <div class="juegoLanzamiento">
+                <div class="imagenJuegoLanz" data-aos="fade-up-left" data-aos-duration="1000">
+                    <img class="imgLanz" src="Media/Lanzamientos1.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+            </div>
+
+            <div class="juegoLanzamiento">
+                <div class="imagenJuegoLanz" data-aos="fade-up-left" data-aos-duration="1000">
+                    <img class="imgLanz" src="Media/Lanzamientos2.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+            </div>
+
+            <div class="juegoLanzamiento">
+                <div class="imagenJuegoLanz" data-aos="fade-up-left" data-aos-duration="1000">
+                    <img class="imgLanz" src="Media/Lanzamientos3.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+            </div>
+
+            <div class="juegoLanzamiento">
+                <div class="imagenJuegoLanz" data-aos="fade-up-left" data-aos-duration="1000">
+                    <img class="imgLanz" src="Media/Lanzamientos4.jpg" alt="">
+                </div>
+                <p class="nombreJuego">Nombre Juego</p>
+            </div>
+        </div>
+
+        <div id="modalLightBoxLanz">
+            <div id="imageToShowLanz">
+                
+            </div>
+            <button class="lbButtons lbbRight" onclick="nextImgLanz()" >
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <button class="lbButtons lbbLeft" onclick="prevImgLanz()">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Esta en la parte de Filosofía -->
+    <section id="filosofia">
+        <h2 class="tituloSeccion tituloFilosofia" data-aos="zoom-in-down">Filosofía</h2>
+        <div id="contenedorFilosofia">
+            <div class="columnaFilo">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                    Duis aute irure dolor in reprehenderit in voluptate 
+                    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+            </div>
+
+            <div class="columnaFilo" data-aos="flip-left">
+                <!-- <div id="videoFilosofia"></div> -->
+                <video src="Media/VideoGameStore.mp4" id="videoFilosofia" controls poster="Media/VideoImage.png"></video>
+            </div>
+        </div>
+    </section>
+
+    <!-- Esta en la parte de Contacto -->
+    <section id="contacto">
+        <h2 class="tituloSeccion tituloContacto" data-aos="zoom-in-down">Contacto</h2>
+
+        <div id="contenedorContacto">
+            <iframe id="map" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1277.6165147266581!2d-3.739935122972338!3d40.393312330906866!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2ses!4v1710818386620!5m2!1ses!2ses" width="600" height="525" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        
+            <form action="" id="formulario">
+                <p id="textoFormulario">Reservar/Comprar</p>
+
+                <input id="formNombre" type="text" name="nombre" placeholder="Nombre y Apellido" required>
+
+                <input id="formDireccion" type="text" name="direccion" placeholder="Direccion" required>
+
+                <input id="formPago" type="text" name="pago" placeholder="Metodo de Pago" required>
+
+                <input id="formCorreo" type="email" name="correo" placeholder="Correo" required>
+
+                <div id="contenedorBoton">
+                    <input id="botonComprar" onclick="modalRyC('modalComprar')" value="Comprar" type="submit">
+
+                    <input id="botonReservar" onclick="modalRyC('modalReservar')" value="Reservar" type="submit">
+                </div>
+            </form>
+        </div>
+
+        <!-- Aqui empieza el modal de Reserva y Compra -->
+        <div id="modalReservar" class="modalRyC">
+            <div class="modalBox">
+                <h1>Mensaje de confirmacion de la reserva</h1>
+                <p id="mensajeReserva" >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, a!</p>
+                <button id="botonReservaMB" onclick="cerrarMBRyC('modalReservar')">Cerrar</button>
+            </div>
+        </div>
+
+        <div id="modalComprar" class="modalRyC">
+            <div class="modalBox">
+                <h1>Mensaje de confirmacion de la compra</h1>
+                <p id="mensajeCompra" >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, a!</p>
+                <button id="botonComprarMB" onclick="cerrarMBRyC('modalComprar')">Cerrar</button>
+            </div>
+        </div>
+    </section>
+
+    <footer id="pieDePagina">
+        <i class="fa-brands fa-x-twitter"></i>
+        <i class="fa-brands fa-facebook"></i>
+        <i class="fa-brands fa-instagram"></i>
+    </footer>
+
+
+    <script>
+        modalBienvenida();
+
+        /* setInterval(heroSlideshow, 3000); */
+
+        readyLightBox();
+        readyLightBoxLanz();
+
+    </script>
+
+    <script>
+        AOS.init();
+    </script>
+</body>
+</html>

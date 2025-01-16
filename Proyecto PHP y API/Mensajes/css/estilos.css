@@ -1,0 +1,61 @@
+h1{
+    width: 100%;
+    color:#0000ff;
+}
+h2{
+    width:auto;
+    color:#ffc400;
+}
+h3{
+    width: auto;
+    color:#6fff00;
+}
+body{
+    background-image: url(../img/fondo.png);
+    background-size:50%;
+    width: 500px;
+    margin: 0 auto;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+label{
+    width: 40%;
+    display: inline-block;
+}
+form{
+    padding-bottom: 40px;
+}
+.contenido{
+    width: calc(50% - 5px);
+    display: inline-block;
+    box-sizing: border-box;
+}
+.contenidoNombre{
+    width: calc(40% - 5px);
+    display: inline-block;
+    box-sizing: border-box;
+}
+button{
+    width: 120px;
+    height: 35px;
+    font-weight: bold;
+    
+}
+.aling-right{
+    float: right;
+}
+.imagen{
+    width: 20px;
+    height: 20px;
+}
+.margen{
+    margin-bottom: 10px;
+}
+.borde{
+    border: 1px solid #000000;
+    padding: 10px;
+}
+.login{
+    width: 400px;
+    margin: 40px auto;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
